@@ -1,0 +1,445 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "小云优享",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path" : "pages/order/order",
+			"style" : 
+			{
+				"navigationBarTitleText" : "订单",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path" : "pages/extend/extend",
+			"style" : 
+			{
+				"navigationBarTitleText" : "推广",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path" : "pages/my/my",
+			"style" : 
+			{
+				"navigationBarTitleText" : "我的",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path" : "pages/order/list",
+			"style" : 
+			{
+				"navigationBarTitleText" : "分类订单",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8" 
+			}
+		},
+		{
+			"path" : "pages/order/detail",
+			"style" : 
+			{
+				"navigationBarTitleText" : "订单详情",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8" 
+			}
+		},
+		{
+			"path" : "pages/index/mobile-recharge",
+			"style" : 
+			{
+				"navigationBarTitleText" : "话费充值",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8" 
+			}
+		},
+		{
+			"path" : "pages/extend/my-friend",
+			"style" : 
+			{
+				"navigationBarTitleText" : "我的好友",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8" 
+			}
+		},
+		{
+			"path" : "pages/my/purse",
+			"style" : 
+			{
+				"navigationBarTitleText" : "我的钱包",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8" 
+			}
+		},
+		{
+			"path" : "pages/my/recharge",
+			"style" : 
+			{
+				"navigationBarTitleText" : "充值USDT",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8" 
+			}
+		},
+		{
+			"path" : "pages/my/recharge-detail",
+			"style" : 
+			{
+				"navigationBarTitleText" : "确定充值",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8" 
+			}
+		},
+		{
+			"path" : "pages/my/withdrawal",
+			"style" : 
+			{
+				"navigationBarTitleText" : "提现",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8" 
+			}
+		},
+		{
+			"path" : "pages/my/transfer",
+			"style" : 
+			{
+				"navigationBarTitleText" : "划转",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8" 
+			}
+		},
+		{
+			"path" : "pages/my/billing-detail",
+			"style" : 
+			{
+				"navigationBarTitleText" : "账单明细",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8" 
+			}
+		},
+		{
+			"path" : "pages/login/login",
+			"style" : 
+			{
+				"navigationBarTitleText" : "登录",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path" : "pages/register/register",
+			"style" : 
+			{
+				"navigationBarTitleText" : "注册",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path" : "pages/forget_pwd/forget_pwd",
+			"style" : 
+			{
+				"navigationBarTitleText" : "找回密码",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path" : "pages/privacy/privacy",
+			"style" : 
+			{
+				"navigationBarTitleText" : "隐私协议",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8" 
+			}
+		},
+		{
+			"path" : "pages/my/my-info",
+			"style" : 
+			{
+				"navigationBarTitleText" : "个人中心",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8" 
+			}
+		},
+		{
+			"path" : "pages/my/changePwd",
+			"style" : 
+			{
+				"navigationBarTitleText" : "修改密码",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8" 
+			}
+		},
+		{
+			"path" : "pages/my/personal-avatar",
+			"style" : 
+			{
+				"navigationBarTitleText" : "个人头像",
+				"navigationBarBackgroundColor": "#000000",
+				"backgroundColor": "#000000",
+				"navigationBarTextStyle": "white"
+			}
+		},
+		{
+			"path" : "pages/my/change-nickname",
+			"style" : 
+			{
+				"navigationBarTitleText" : "修改昵称",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8" 
+			}
+		},
+		{
+			"path" : "pages/my/email-remind",
+			"style" : 
+			{
+				"navigationBarTitleText" : "邮件提醒",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8" 
+			}
+		},
+		{
+			"path" : "pages/index/notice",
+			"style" : 
+			{
+				"navigationBarTitleText" : "公告中心",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8" 
+			}
+		},
+		{
+			"path" : "pages/my/invite",
+			"style" : 
+			{
+				"navigationBarTitleText" : "我的邀请码",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path" : "pages/my/invite-friend",
+			"style" : 
+			{
+				"navigationBarTitleText" : "邀请好友",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8" 
+			}
+		},
+		{
+			"path" : "pages/my/open-substation",
+			"style" : 
+			{
+				"navigationBarTitleText" : "开通分站",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8" 
+			}
+		},
+		{
+			"path" : "pages/my/payment-type",
+			"style" : 
+			{
+				"navigationBarTitleText" : "收款方式",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8" 
+			}
+		},
+		{
+			"path" : "pages/my/add-payment",
+			"style" : 
+			{
+				"navigationBarTitleText" : "添加收款方式",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8" 
+			}
+		},
+		{
+			"path" : "pages/market/market",
+			"style" : 
+			{
+				"navigationBarTitleText" : "交易大厅",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8" 
+			}
+		},
+		{
+			"path" : "pages/market/buy",
+			"style" : 
+			{
+				"navigationBarTitleText" : "买入Y币",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8" 
+			}
+		},
+		{
+			"path" : "pages/market/order",
+			"style" : 
+			{
+				"navigationBarTitleText" : "订单",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8" 
+			}
+		},
+		{
+			"path" : "pages/market/cancel-order",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8" 
+			}
+		},
+		{
+			"path" : "pages/market/order-detail",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8" 
+			}
+		},
+		{
+			"path" : "pages/market/order-list",
+			"style" : 
+			{
+				"navigationBarTitleText" : "订单历史",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8" 
+			}
+		},
+		{
+			"path" : "pages/market/order-detail-success",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8" 
+			}
+		},
+		{
+			"path" : "pages/ad/ad",
+			"style" : 
+			{
+				"navigationBarTitleText" : "我的广告",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path" : "pages/ad/add",
+			"style" : 
+			{
+				"navigationBarTitleText" : "发布广告",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8"
+			}
+		},
+		{
+			"path" : "pages/my/info-center/info-center",
+			"style" : 
+			{
+				"navigationBarTitleText" : "信息中心",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8"
+			}
+		},
+		{
+			"path" : "pages/my/info-center/cz-notice",
+			"style" : 
+			{
+				"navigationBarTitleText" : "充值通知",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8"
+			}
+		},
+		{
+			"path" : "pages/my/info-center/order-notice",
+			"style" : 
+			{
+				"navigationBarTitleText" : "订单通知",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8"
+			}
+		},
+		{
+			"path" : "pages/my/info-center/jy-notice",
+			"style" : 
+			{
+				"navigationBarTitleText" : "交易通知",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8"
+			}
+		},
+		{
+			"path" : "pages/query/hf-query",
+			"style" : 
+			{
+				"navigationBarTitleText" : "话费余额查询",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8"
+			}
+		},
+		{
+			"path" : "pages/query/df-query",
+			"style" : 
+			{
+				"navigationBarTitleText" : "电费查询",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8"
+			}
+		},
+		{
+			"path" : "pages/query/log/log",
+			"style" : 
+			{
+				"navigationBarTitleText" : "查询记录",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8"
+			}
+		},
+		{
+			"path" : "pages/index/gifts",
+			"style" : 
+			{
+				"navigationBarTitleText" : "礼品卡",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8"
+			}
+		},
+		{
+			"path" : "pages/index/notice-detail",
+			"style" : 
+			{
+				"navigationBarTitleText" : "公告详情"
+			}
+		},
+		{
+			"path" : "pages/my/kf",
+			"style" : 
+			{
+				"navigationBarTitleText" : "联系我们",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8"
+			}
+		}
+	],
+	"globalStyle": { 
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "小云优享",
+		"navigationBarBackgroundColor": "#ffffff",
+		"backgroundColor": "#F8F8F8"
+		// "app-plus": {
+		//     "navigationStyle": "custom"
+		// }
+	},
+	"uniIdRouter": {}
+}

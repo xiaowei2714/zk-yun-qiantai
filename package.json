@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "uni-clipboard": "^1.0.5",
+    "vue-clipboard2": "^0.3.3"
+  }
+}
