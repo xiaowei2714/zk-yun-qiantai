@@ -6,19 +6,19 @@
 				<view @click="changeType" style="width: 196rpx;height: 64rpx;background: #E5E6F8;border-radius: 0rpx 32rpx 0rpx 32rpx;position: absolute;top: 0;right: 0;
 					font-weight: 400;font-size: 24rpx;color: #3742C5;text-align: center;line-height: 64rpx;">切换批量充值</view>
 				<view style="padding: 34rpx;">
-					<view style="font-weight: 400;font-size: 24rpx;margin-top: 40rpx;margin-left: 10rpx;">输入手机号</view>
+					<view style="font-weight: 400;font-size: 24rpx;margin-top: 40rpx;margin-left: 10rpx;">输入户号</view>
 					<view
 						style="height: 80rpx;margin-top: 12rpx;background: #F6F7F9;border-radius: 24rpx;display: flex;align-items: center;width: 100%;">
 						<view style="width: 100%;margin-left: 34rpx;">
-							<input v-model="form_data.single_phone" type="text" placeholder="请输入手机号"
+							<input v-model="form_data.single_number" type="text" placeholder="请输入户号"
 								placeholder-style="font-weight: 400;font-size: 30rpx;color: #B7BAC7;width: 100%" />
 						</view>
 					</view>
-					<view style="font-weight: 400;font-size: 24rpx;margin-top: 26rpx;margin-left: 10rpx;">机主姓名</view>
+					<view style="font-weight: 400;font-size: 24rpx;margin-top: 26rpx;margin-left: 10rpx;">地区</view>
 					<view
 						style="height: 80rpx;margin-top: 12rpx;background: #F6F7F9;border-radius: 24rpx;display: flex;align-items: center;width: 100%;">
 						<view style="width: 100%;margin-left: 34rpx;">
-							<input v-model="form_data.single_name" type="text" placeholder="请输入机主姓名"
+							<input v-model="form_data.single_area" type="text" placeholder="请输入地区"
 								placeholder-style="font-weight: 400;font-size: 30rpx;color: #B7BAC7;width: 100%" />
 						</view>
 					</view>
@@ -32,11 +32,11 @@
 					<view>
 						<image src="/static/hfczje.png" style="width: 27rpx;height: 27rpx;" mode=""></image>
 					</view>
-					<view style="margin-left: 6rpx;font-weight: 400;font-size: 24rpx;margin-top: -5rpx;">号码批量充值</view>
+					<view style="margin-left: 6rpx;font-weight: 400;font-size: 24rpx;margin-top: -5rpx;">户号批量充值</view>
 				</view>
 				<view style="margin-top: 20rpx;margin-bottom: 20rpx;">
 					<view style="font-weight: 400;font-size: 28rpx;color: #C7CAD2;">当前已导入<span
-							style="color: #000000;">{{numbers.length}}</span>个号码</view>
+							style="color: #000000;">{{numbers.length}}</span>个户号</view>
 				</view>
 				<view v-for="(item, index) in numbers" :key="index"
 					style="font-weight: 400;font-size: 28rpx;color: #757B8C;margin-bottom: 22rpx;">{{item}}</view>
@@ -104,13 +104,13 @@
 						<view style="padding: 15rpx;background: #F6F7F9;border-radius: 32rpx;">
 							<u-textarea v-model="numbers_txt" border="none"
 								style="font-weight: 400;font-size: 28rpx;background-color: #F6F7F9;" height="150rpx"
-								placeholder="请输入手机号 姓名"
+								placeholder="请输入户号 地区"
 								placeholder-style="font-weight: 400;font-size: 28rpx;color: #A9ABB6;">
 							</u-textarea>
 						</view>
 						<view
 							style="width: 100%;text-align: center;margin-top: 32rpx;font-weight: 400;font-size: 24rpx;color: #757B8C;">
-							注：多个号码请换行隔开，一行填写一个号码
+							注：多个户号请换行隔开，一行填写一个号码
 						</view>
 						<view style="display: flex;justify-content: center;margin-top: 40rpx;">
 							<view @click="daoru"
@@ -138,8 +138,8 @@
 				list: [],
 				count: 0,
 				form_data: {
-					single_name: '',
-					single_phone: '',
+					single_area: '',
+					single_number: ''
 				}
 			};
 		},
@@ -153,16 +153,13 @@
 			},
 			confirmSubmit() {
 				if (this.type == 1) { // 单个充值
-					if (!this.form_data.single_name) return uni.$u.toast('请正确输入记住姓名')
-					if (!this.form_data.single_phone) return uni.$u.toast('请正确输入手机号')
+					if (!this.form_data.single_area) return uni.$u.toast('请正确输入地区')
+					if (!this.form_data.single_number) return uni.$u.toast('请正确输入户号')
 					if (!this.activeMeal) return uni.$u.toast('请选择充值金额')
-					if (!/^1[3-9]\d{9}$/.test(this.form_data.single_phone)) {
-						return uni.$u.toast('请正确输入手机号')
-					}
 
-					this.$request('post', 'api/recharge/phoneRecharge', {
-						name: this.form_data.single_name,
-						phone: this.form_data.single_phone,
+					this.$request('post', 'api/recharge/electricityRecharge', {
+						area: this.form_data.single_area,
+						number: this.form_data.single_number,
 						meal_id: this.activeMeal.id,
 						meal_discount: this.activeMeal.discount,
 						meal_discounted_price: this.activeMeal.discountedPrice,
@@ -176,10 +173,10 @@
 						}
 					})
 				} else { // 批量充值
-					if (!this.numbers_txt) return uni.$u.toast('请正确输入充值号码')
+					if (!this.numbers_txt) return uni.$u.toast('请真确输入批量户号')
 					if (!this.activeMeal) return uni.$u.toast('请选择充值金额')
 
-					this.$request('post', 'api/recharge/batchPhoneRecharge', {
+					this.$request('post', 'api/recharge/batchElectricityRecharge', {
 						batchData: this.numbers_txt,
 						meal_id: this.activeMeal.id,
 						meal_discount: this.activeMeal.discount,
@@ -193,6 +190,7 @@
 							uni.$u.toast(res.msg)
 						}
 					})
+					
 				}
 
 			},
@@ -208,7 +206,7 @@
 					title: '加载中',
 					mask: true
 				})
-				this.$request('get', 'api/index/getMealList').then(res => {
+				this.$request('get', 'api/index/getMealElectricityList').then(res => {
 					uni.hideLoading()
 					if (res.code) {
 						this.list = res.data.list
@@ -231,7 +229,7 @@
 					this.numbers = []
 					this.numbers_txt = ''
 					uni.setNavigationBarTitle({
-						title: '话费充值'
+						title: '电费充值'
 					})
 				}
 			}

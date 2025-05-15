@@ -59,6 +59,15 @@
 			}
 		},
 		{
+			"path" : "pages/index/electricity-recharge",
+			"style" : 
+			{
+				"navigationBarTitleText" : "电费充值",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8" 
+			}
+		},
+		{
 			"path" : "pages/extend/my-friend",
 			"style" : 
 			{

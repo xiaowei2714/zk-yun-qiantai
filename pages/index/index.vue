@@ -46,7 +46,7 @@
 					</view>
 				</view>
 				<view> 
-					<view style="width: 330rpx;height: 136rpx;background: #ECF0F9;border-radius: 32rpx 32rpx 32rpx 32rpx;padding-top: 1rpx;">
+					<view @click="toPage('/pages/index/electricity-recharge')" style="width: 330rpx;height: 136rpx;background: #ECF0F9;border-radius: 32rpx 32rpx 32rpx 32rpx;padding-top: 1rpx;">
 						<view style="display: flex;align-items: center;margin-left: 38rpx;margin-top: 19rpx;">
 							<view>
 								<image src="/static/index-dianf.png" style="width: 54rpx;height: 54rpx;" mode=""></image>
