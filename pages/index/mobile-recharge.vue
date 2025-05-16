@@ -160,7 +160,7 @@
 						return uni.$u.toast('请正确输入手机号')
 					}
 
-					this.$request('post', 'api/recharge/phoneRecharge', {
+					this.$request('post', 'api/consumeRecharge/phoneRecharge', {
 						name: this.form_data.single_name,
 						phone: this.form_data.single_phone,
 						meal_id: this.activeMeal.id,
@@ -179,7 +179,7 @@
 					if (!this.numbers_txt) return uni.$u.toast('请正确输入充值号码')
 					if (!this.activeMeal) return uni.$u.toast('请选择充值金额')
 
-					this.$request('post', 'api/recharge/batchPhoneRecharge', {
+					this.$request('post', 'api/consumeRecharge/batchPhoneRecharge', {
 						batchData: this.numbers_txt,
 						meal_id: this.activeMeal.id,
 						meal_discount: this.activeMeal.discount,

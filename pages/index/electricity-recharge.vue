@@ -157,7 +157,7 @@
 					if (!this.form_data.single_number) return uni.$u.toast('请正确输入户号')
 					if (!this.activeMeal) return uni.$u.toast('请选择充值金额')
 
-					this.$request('post', 'api/recharge/electricityRecharge', {
+					this.$request('post', 'api/consumeRecharge/electricityRecharge', {
 						area: this.form_data.single_area,
 						number: this.form_data.single_number,
 						meal_id: this.activeMeal.id,
@@ -176,7 +176,7 @@
 					if (!this.numbers_txt) return uni.$u.toast('请真确输入批量户号')
 					if (!this.activeMeal) return uni.$u.toast('请选择充值金额')
 
-					this.$request('post', 'api/recharge/batchElectricityRecharge', {
+					this.$request('post', 'api/consumeRecharge/batchElectricityRecharge', {
 						batchData: this.numbers_txt,
 						meal_id: this.activeMeal.id,
 						meal_discount: this.activeMeal.discount,
