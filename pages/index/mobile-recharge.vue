@@ -140,7 +140,8 @@
 				form_data: {
 					single_name: '',
 					single_phone: '',
-				}
+				},
+				can_click: true
 			};
 		},
 		onLoad() {
@@ -152,6 +153,11 @@
 				this.pldr_show = false
 			},
 			confirmSubmit() {
+				if (this.can_click === false) {
+					return uni.$u.toast('正在充值中...')
+				}
+				this.can_click = false
+				
 				if (this.type == 1) { // 单个充值
 					if (!this.form_data.single_name) return uni.$u.toast('请正确输入记住姓名')
 					if (!this.form_data.single_phone) return uni.$u.toast('请正确输入手机号')
@@ -168,6 +174,7 @@
 						meal_discounted_price: this.activeMeal.discountedPrice,
 						money: this.activeMeal.price
 					}).then(res => {
+						this.can_click = true
 						uni.hideLoading()
 						if (res.code) {
 							uni.$u.toast('充值成功')
@@ -186,6 +193,7 @@
 						meal_discounted_price: this.activeMeal.discountedPrice,
 						money: this.activeMeal.price
 					}).then(res => {
+						this.can_click = true
 						uni.hideLoading()
 						if (res.code) {
 							uni.$u.toast(res.data.msg)

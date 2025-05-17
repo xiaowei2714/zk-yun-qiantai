@@ -15,13 +15,26 @@
 						</view>
 					</view>
 					<view style="font-weight: 400;font-size: 24rpx;margin-top: 26rpx;margin-left: 10rpx;">地区</view>
-					<view
+					<view class="uni-list">
+						<view class="uni-list-cell">
+							<view class="uni-list-cell-left">
+								当前选择
+							</view>
+							<view class="uni-list-cell-db">
+								<picker @change="bindPickerChange" :value="form_data.single_area" :range="areaData">
+									<view class="uni-input">{{areaData[form_data.single_area]}}</view>
+								</picker>
+							</view>
+						</view>
+					</view>
+
+					<!-- <view
 						style="height: 80rpx;margin-top: 12rpx;background: #F6F7F9;border-radius: 24rpx;display: flex;align-items: center;width: 100%;">
 						<view style="width: 100%;margin-left: 34rpx;">
 							<input v-model="form_data.single_area" type="text" placeholder="请输入地区"
 								placeholder-style="font-weight: 400;font-size: 30rpx;color: #B7BAC7;width: 100%" />
 						</view>
-					</view>
+					</view> -->
 				</view>
 			</view>
 			<view v-else
@@ -138,22 +151,39 @@
 				list: [],
 				count: 0,
 				form_data: {
-					single_area: '',
+					single_area: 0,
 					single_number: ''
-				}
+				},
+				can_click: true,
+				areaIndex: 0,
+				areaData: [
+					"北京", "天津", "辽宁", "江苏", "浙江",
+					"山东", "湖南", "陕西", "冀北", "新疆",
+					"宁夏", "安徽", "重庆", "福建", "河南",
+					"青海", "湖北", "蒙东", "黑龙江", "吉林",
+					"上海", "甘肃", "山西", "四川", "江西", "河北"
+				]
 			};
 		},
 		onLoad() {
 			this.getMealList()
 		},
 		methods: {
+			bindPickerChange: function(e) {
+				console.log('picker发送选择改变，携带值为', e.detail.value)
+				this.form_data.single_area = e.detail.value
+			},
 			daoru() {
 				this.numbers = this.stringToLines(this.numbers_txt)
 				this.pldr_show = false
 			},
 			confirmSubmit() {
+				if (this.can_click === false) {
+					return uni.$u.toast('正在充值中...')
+				}
+				this.can_click = false
+				
 				if (this.type == 1) { // 单个充值
-					if (!this.form_data.single_area) return uni.$u.toast('请正确输入地区')
 					if (!this.form_data.single_number) return uni.$u.toast('请正确输入户号')
 					if (!this.activeMeal) return uni.$u.toast('请选择充值金额')
 
@@ -165,6 +195,7 @@
 						meal_discounted_price: this.activeMeal.discountedPrice,
 						money: this.activeMeal.price
 					}).then(res => {
+						this.can_click = true
 						uni.hideLoading()
 						if (res.code) {
 							uni.$u.toast('充值成功')
@@ -183,6 +214,7 @@
 						meal_discounted_price: this.activeMeal.discountedPrice,
 						money: this.activeMeal.price
 					}).then(res => {
+						this.can_click = true
 						uni.hideLoading()
 						if (res.code) {
 							uni.$u.toast(res.data.msg)
@@ -190,7 +222,7 @@
 							uni.$u.toast(res.msg)
 						}
 					})
-					
+
 				}
 
 			},
@@ -238,5 +270,33 @@
 </script>
 
 <style lang="scss">
-
+.uni-list-cell {
+	margin-top: 10rpx;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+	background: #f6f7f9;
+	font-weight: 400;
+	font-size: 30rpx;
+	width: 100%;
+	border-radius: 12px;
+}
+.uni-list-cell-left {
+    white-space: nowrap;
+    font-size: 14px;
+    padding: 0 15px;
+	color: #B7BAC7;
+}
+.uni-list-cell-db, .uni-list-cell-right {
+    flex: 1;
+}
+.uni-input {
+    height: 25px;
+    padding: 7px 12px;
+    line-height: 25px;
+    font-size: 14px;
+    flex: 1;
+}
 </style>
