@@ -6,25 +6,20 @@
 				<view @click="changeType" style="width: 196rpx;height: 64rpx;background: #E5E6F8;border-radius: 0rpx 32rpx 0rpx 32rpx;position: absolute;top: 0;right: 0;
 					font-weight: 400;font-size: 24rpx;color: #3742C5;text-align: center;line-height: 64rpx;">切换批量充值</view>
 				<view style="padding: 34rpx;">
-					<view style="font-weight: 400;font-size: 24rpx;margin-top: 40rpx;margin-left: 10rpx;">输入户号</view>
+					<view style="font-weight: 400;font-size: 24rpx;margin-top: 40rpx;margin-left: 10rpx;">输入手机号</view>
 					<view
 						style="height: 80rpx;margin-top: 12rpx;background: #F6F7F9;border-radius: 24rpx;display: flex;align-items: center;width: 100%;">
 						<view style="width: 100%;margin-left: 34rpx;">
-							<input v-model="form_data.single_number" type="text" placeholder="请输入户号"
+							<input v-model="form_data.single_phone" type="text" placeholder="请输入手机号"
 								placeholder-style="font-weight: 400;font-size: 30rpx;color: #B7BAC7;width: 100%" />
 						</view>
 					</view>
-					<view style="font-weight: 400;font-size: 24rpx;margin-top: 26rpx;margin-left: 10rpx;">地区</view>
-					<view class="uni-list">
-						<view class="uni-list-cell">
-							<view class="uni-list-cell-left">
-								当前选择
-							</view>
-							<view class="uni-list-cell-db">
-								<picker @change="bindPickerChange" :value="form_data.single_area" :range="areaData">
-									<view class="uni-input">{{areaData[form_data.single_area]}}</view>
-								</picker>
-							</view>
+					<view style="font-weight: 400;font-size: 24rpx;margin-top: 26rpx;margin-left: 10rpx;">机主姓名</view>
+					<view
+						style="height: 80rpx;margin-top: 12rpx;background: #F6F7F9;border-radius: 24rpx;display: flex;align-items: center;width: 100%;">
+						<view style="width: 100%;margin-left: 34rpx;">
+							<input v-model="form_data.single_name" type="text" placeholder="请输入机主姓名"
+								placeholder-style="font-weight: 400;font-size: 30rpx;color: #B7BAC7;width: 100%" />
 						</view>
 					</view>
 				</view>
@@ -37,11 +32,11 @@
 					<view>
 						<image src="/static/hfczje.png" style="width: 27rpx;height: 27rpx;" mode=""></image>
 					</view>
-					<view style="margin-left: 6rpx;font-weight: 400;font-size: 24rpx;margin-top: -5rpx;">户号批量充值</view>
+					<view style="margin-left: 6rpx;font-weight: 400;font-size: 24rpx;margin-top: -5rpx;">号码批量充值</view>
 				</view>
 				<view style="margin-top: 20rpx;margin-bottom: 20rpx;">
 					<view style="font-weight: 400;font-size: 28rpx;color: #C7CAD2;">当前已导入<span
-							style="color: #000000;">{{numbers.length}}</span>个户号</view>
+							style="color: #000000;">{{numbers.length}}</span>个号码</view>
 				</view>
 				<view v-for="(item, index) in numbers" :key="index"
 					style="font-weight: 400;font-size: 28rpx;color: #757B8C;margin-bottom: 22rpx;">{{item}}</view>
@@ -109,13 +104,13 @@
 						<view style="padding: 15rpx;background: #F6F7F9;border-radius: 32rpx;">
 							<u-textarea v-model="numbers_txt" border="none"
 								style="font-weight: 400;font-size: 28rpx;background-color: #F6F7F9;" height="150rpx"
-								placeholder="请输入户号 地区"
+								placeholder="请输入手机号 姓名"
 								placeholder-style="font-weight: 400;font-size: 28rpx;color: #A9ABB6;">
 							</u-textarea>
 						</view>
 						<view
 							style="width: 100%;text-align: center;margin-top: 32rpx;font-weight: 400;font-size: 24rpx;color: #757B8C;">
-							注：多个户号请换行隔开，一行填写一个号码
+							注：多个号码请换行隔开，一行填写一个号码
 						</view>
 						<view style="display: flex;justify-content: center;margin-top: 40rpx;">
 							<view @click="daoru"
@@ -143,28 +138,16 @@
 				list: [],
 				count: 0,
 				form_data: {
-					single_area: 0,
-					single_number: ''
+					single_name: '',
+					single_phone: '',
 				},
-				can_click: true,
-				areaIndex: 0,
-				areaData: [
-					"北京", "天津", "辽宁", "江苏", "浙江",
-					"山东", "湖南", "陕西", "冀北", "新疆",
-					"宁夏", "安徽", "重庆", "福建", "河南",
-					"青海", "湖北", "蒙东", "黑龙江", "吉林",
-					"上海", "甘肃", "山西", "四川", "江西", "河北"
-				]
+				can_click: true
 			};
 		},
 		onLoad() {
 			this.getMealList()
 		},
 		methods: {
-			bindPickerChange: function(e) {
-				console.log('picker发送选择改变，携带值为', e.detail.value)
-				this.form_data.single_area = e.detail.value
-			},
 			daoru() {
 				this.numbers = this.stringToLines(this.numbers_txt)
 				this.pldr_show = false
@@ -178,22 +161,27 @@
 					title: '充值中',
 					mask: true
 				})
-
+				
 				if (this.type == 1) { // 单个充值
-					if (!this.form_data.single_number) {
+					if (!this.form_data.single_phone) {
 						this.can_click = true
 						uni.hideLoading()
-						return uni.$u.toast('请正确输入户号')
+						return uni.$u.toast('请正确输入手机号')
 					}
 					if (!this.activeMeal) {
 						this.can_click = true
 						uni.hideLoading()
 						return uni.$u.toast('请选择充值金额')
 					}
+					if (!/^1[3-9]\d{9}$/.test(this.form_data.single_phone)) {
+						this.can_click = true
+						uni.hideLoading()
+						return uni.$u.toast('请正确输入手机号')
+					}
 
-					this.$request('post', 'api/consumeRecharge/electricityRecharge', {
-						area: this.form_data.single_area,
-						number: this.form_data.single_number,
+					this.$request('post', 'api/consumeRecharge/quicklyRecharge', {
+						name: this.form_data.single_name,
+						phone: this.form_data.single_phone,
 						meal_id: this.activeMeal.id,
 						meal_discount: this.activeMeal.discount,
 						meal_discounted_price: this.activeMeal.discountedPrice,
@@ -211,7 +199,7 @@
 					if (!this.numbers_txt) {
 						this.can_click = true
 						uni.hideLoading()
-						return uni.$u.toast('请正确输入批量户号')
+						return uni.$u.toast('请正确输入充值号码')
 					}
 					if (!this.activeMeal) {
 						this.can_click = true
@@ -219,7 +207,7 @@
 						return uni.$u.toast('请选择充值金额')
 					}
 
-					this.$request('post', 'api/consumeRecharge/batchElectricityRecharge', {
+					this.$request('post', 'api/consumeRecharge/batchQuicklyRecharge', {
 						batch_data: this.numbers_txt,
 						meal_id: this.activeMeal.id,
 						meal_discount: this.activeMeal.discount,
@@ -234,7 +222,6 @@
 							uni.$u.toast(res.msg)
 						}
 					})
-
 				}
 
 			},
@@ -250,7 +237,7 @@
 					title: '加载中',
 					mask: true
 				})
-				this.$request('get', 'api/index/getMealElectricityList').then(res => {
+				this.$request('get', 'api/index/getMealQuicklyList').then(res => {
 					uni.hideLoading()
 					if (res.code) {
 						this.list = res.data.list
@@ -273,7 +260,7 @@
 					this.numbers = []
 					this.numbers_txt = ''
 					uni.setNavigationBarTitle({
-						title: '电费充值'
+						title: '话费充值'
 					})
 				}
 			}
@@ -282,38 +269,5 @@
 </script>
 
 <style lang="scss">
-	.uni-list-cell {
-		margin-top: 10rpx;
-		position: relative;
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		align-items: center;
-		background: #f6f7f9;
-		font-weight: 400;
-		font-size: 30rpx;
-		width: 100%;
-		border-radius: 12px;
-	}
 
-	.uni-list-cell-left {
-		white-space: nowrap;
-		font-size: 14px;
-		padding: 0 15px;
-		color: #B7BAC7;
-	}
-
-	.uni-list-cell-db,
-	.uni-list-cell-right {
-		flex: 1;
-	}
-
-	.uni-input {
-		height: 25px;
-		padding: 7px 12px;
-		line-height: 25px;
-		font-size: 14px;
-		flex: 1;
-		text-align: center;
-	}
 </style>

@@ -55,7 +55,7 @@
 						</view>
 						<view style="font-weight: 300;font-size: 24rpx;color: #A9ABB6;text-align: center;margin-top: -10rpx;">帮充挣佣金</view>
 					</view>
-					<view style="width: 330rpx;height: 136rpx;background: #ECF0F9;border-radius: 32rpx 32rpx 32rpx 32rpx;padding-top: 1rpx;margin-top: 28rpx;">
+					<view @click="toPage('/pages/index/quickly-recharge')" style="width: 330rpx;height: 136rpx;background: #ECF0F9;border-radius: 32rpx 32rpx 32rpx 32rpx;padding-top: 1rpx;margin-top: 28rpx;">
 						<view style="display: flex;align-items: center;margin-left: 38rpx;margin-top: 19rpx;">
 							<view>
 								<image src="/static/index-youka.png" style="width: 54rpx;height: 54rpx;" mode=""></image>

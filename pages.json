@@ -68,6 +68,15 @@
 			}
 		},
 		{
+			"path" : "pages/index/quickly-recharge",
+			"style" : 
+			{
+				"navigationBarTitleText" : "话费快充",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8" 
+			}
+		},
+		{
 			"path" : "pages/extend/my-friend",
 			"style" : 
 			{

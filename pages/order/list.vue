@@ -17,81 +17,87 @@
 					:scroll="false" :tabs="['全部', '充值中', '已完成', '已失败']" @change="changeTab"></v-tabs>
 			</view>
 		</view>
-		<view style="padding: 30rpx;padding-bottom: 245rpx;">
-			<view v-for="(item, index) in list" :key="index" style="padding-bottom: 30rpx;">
-				<view style="height: 442rpx;background: #FFFFFF;border-radius: 32rpx;position: relative;">
-					<view v-if="item.status == 1" class="status_show">待充值</view>
-					<view v-else-if="item.status == 2" class="status_show status_recharging">充值中</view>
-					<view v-else-if="item.status == 3" class="status_show status_success">已完成</view>
-					<view v-else-if="item.status == 4" class="status_show status_fail">已失败</view>
-					<view style="padding-top: 24rpx;margin-left: 34rpx;">
-						<view style="display: flex;">
-							<view style="font-weight: bold;font-size: 28rpx;">订单：{{ item.sn }}</view>
-							<view class="type_show">{{ item.type == 1 ? '话费' : '电费' }}</view>
-						</view>
-						<view style="margin-top: 10rpx;font-weight: 500;font-size: 24rpx;color: #A9ABB6;">
-							{{ item.time }}
-						</view>
-					</view>
-					<view style="width: 100%;opacity: 0.1;margin-top: 20rpx;height: 1rpx;background-color: #707070;">
-					</view>
-					<view style="margin-left: 34rpx;margin-top: 20rpx;margin-right: 32rpx;">
-						<view style="display: flex;justify-content: space-between;">
-							<view style="display: flex;align-items: center;">
-								<view>
-									<image src="/static/order-huaf.png" style="width: 72rpx;height: 72rpx;" mode="">
-									</image>
-								</view>
-								<view class="account_show">
-									{{ item.account }}
-									<span v-if="item.account_name != ''"
-										class="account_type_show">({{ item.account_name }})</span>
-								</view>
-							</view>
-							<view class="pay_price_show">
-								￥{{ item.pay_price }}
-							</view>
-						</view>
-						<view style="margin-top: 26rpx;display: flex;justify-content: space-between;">
-							<view style="text-align: center;">
-								<view style="font-weight: bold;font-size: 24rpx;">{{ item.price }}元</view>
-								<view style="margin-top: 5rpx;font-weight: 400;font-size: 24rpx;color: #A9ABB6;">充值
-								</view>
-							</view>
-							<view style="text-align: center;">
-								<view style="font-weight: bold;font-size: 24rpx;">{{ item.balances_price }}元</view>
-								<view style="margin-top: 5rpx;font-weight: 400;font-size: 24rpx;color: #A9ABB6;">已充
-								</view>
-							</view>
-							<view style="text-align: center;">
-								<view style="font-weight: bold;font-size: 24rpx;">{{ item.up_price }}元</view>
-								<view style="margin-top: 5rpx;font-weight: 400;font-size: 24rpx;color: #A9ABB6;">初始
-								</view>
-							</view>
-							<view style="text-align: center;">
-								<view style="font-weight: bold;font-size: 24rpx;">{{ item.down_price }}元</view>
-								<view style="margin-top: 5rpx;font-weight: 400;font-size: 24rpx;color: #A9ABB6;">当前
-								</view>
-							</view>
-						</view>
-						<view
-							style="width: 100%;opacity: 0.1;margin-top: 22rpx;height: 1rpx;background-color: #707070;">
-						</view>
-						<view
-							style="display: flex;justify-content: space-between;align-items: center;margin-top: 18rpx;">
-							<view style="font-weight: 400;font-size: 28rpx;color: #3742C5;">更多</view>
+		<view style="padding: 30rpx;padding-bottom: 30rpx;">
+			<scroll-view scroll-y="true" style="height: 100%;" @scrolltolower="loadMoreData" lower-threshold="10">
+				<view v-for="(item, index) in list" :key="index" style="padding-bottom: 30rpx;">
+					<view style="height: 442rpx;background: #FFFFFF;border-radius: 32rpx;position: relative;">
+						<view v-if="item.status == 1" class="status_show">待充值</view>
+						<view v-else-if="item.status == 2" class="status_show status_recharging">充值中</view>
+						<view v-else-if="item.status == 3" class="status_show status_success">已完成</view>
+						<view v-else-if="item.status == 4" class="status_show status_fail">已失败</view>
+						<view style="padding-top: 24rpx;margin-left: 34rpx;">
 							<view style="display: flex;">
-								<view v-if="item.status == 1" @click="cancelOrder(item.id)" class="cancel_order">取消订单
+								<view style="font-weight: bold;font-size: 28rpx;">订单：{{ item.sn }}</view>
+								<view v-if="item.type == 1 || item.type == 2" class="type_show">
+									{{ nameShow(item.type) }}
 								</view>
-								<view v-if="item.status == 3" @click="genBalance(item.id)" class="gen_balance">更新余额
+								<view v-if="item.type == 3" class="type_show type_quickly_show">{{ nameShow(item.type) }}</view>
+							</view>
+							<view style="margin-top: 10rpx;font-weight: 500;font-size: 24rpx;color: #A9ABB6;">
+								{{ item.time }}
+							</view>
+						</view>
+						<view
+							style="width: 100%;opacity: 0.1;margin-top: 20rpx;height: 1rpx;background-color: #707070;">
+						</view>
+						<view style="margin-left: 34rpx;margin-top: 20rpx;margin-right: 32rpx;">
+							<view style="display: flex;justify-content: space-between;">
+								<view style="display: flex;align-items: center;">
+									<view>
+										<image src="/static/order-huaf.png" style="width: 72rpx;height: 72rpx;" mode="">
+										</image>
+									</view>
+									<view class="account_show">
+										{{ item.account }}
+										<span v-if="item.account_name != ''"
+											class="account_type_show">({{ item.account_name }})</span>
+									</view>
 								</view>
-								<view @click="detail(item.id)" class="go_detail">查看详情</view>
+								<view class="pay_price_show">
+									￥{{ item.pay_price }}
+								</view>
+							</view>
+							<view style="margin-top: 26rpx;display: flex;justify-content: space-between;">
+								<view style="text-align: center;">
+									<view style="font-weight: bold;font-size: 24rpx;">{{ item.price }}元</view>
+									<view style="margin-top: 5rpx;font-weight: 400;font-size: 24rpx;color: #A9ABB6;">充值
+									</view>
+								</view>
+								<view style="text-align: center;">
+									<view style="font-weight: bold;font-size: 24rpx;">{{ item.balances_price }}元</view>
+									<view style="margin-top: 5rpx;font-weight: 400;font-size: 24rpx;color: #A9ABB6;">已充
+									</view>
+								</view>
+								<view style="text-align: center;">
+									<view style="font-weight: bold;font-size: 24rpx;">{{ item.up_price }}元</view>
+									<view style="margin-top: 5rpx;font-weight: 400;font-size: 24rpx;color: #A9ABB6;">初始
+									</view>
+								</view>
+								<view style="text-align: center;">
+									<view style="font-weight: bold;font-size: 24rpx;">{{ item.down_price }}元</view>
+									<view style="margin-top: 5rpx;font-weight: 400;font-size: 24rpx;color: #A9ABB6;">当前
+									</view>
+								</view>
+							</view>
+							<view
+								style="width: 100%;opacity: 0.1;margin-top: 22rpx;height: 1rpx;background-color: #707070;">
+							</view>
+							<view
+								style="display: flex;justify-content: space-between;align-items: center;margin-top: 18rpx;">
+								<view style="font-weight: 400;font-size: 28rpx;color: #3742C5;">更多</view>
+								<view style="display: flex;">
+									<view v-if="item.status == 1" @click="cancelOrder(item.id)" class="cancel_order">
+										取消订单
+									</view>
+									<view v-if="item.status == 3" @click="genBalance(item.id)" class="gen_balance">更新余额
+									</view>
+									<view @click="detail(item.id)" class="go_detail">查看详情</view>
+								</view>
 							</view>
 						</view>
 					</view>
 				</view>
-
-			</view>
+			</scroll-view>
 		</view>
 	</view>
 </template>
@@ -121,7 +127,12 @@
 				uni.setNavigationBarTitle({
 					title: '话费订单'
 				})
+			} else if (options.type == 'quickly') {
+				uni.setNavigationBarTitle({
+					title: '话费快充订单'
+				})
 			}
+
 			let newActiveTab = Number(options.index)
 
 			this.activeTab = newActiveTab
@@ -148,6 +159,29 @@
 						this.query_e = res.data.query_e
 					}
 				})
+			},
+			nameShow(value) {
+				console.log(11, value)
+				switch (value) {
+					case 1:
+						return '话费'
+
+					case 2:
+						return '电费'
+
+					case 3:
+						return '话费快充'
+
+					case 4:
+						return '礼品卡'
+
+					default:
+						return ''
+				}
+			},
+			loadMoreData() {
+				console.log(1111)
+
 			},
 			detail(id) {
 				uni.navigateTo({
@@ -192,7 +226,6 @@
 					}
 				});
 			},
-
 			genBalance(id) {
 				let price = this.query_e
 				if (this.type == 'mobile') {
@@ -214,7 +247,7 @@
 					success: function(res) {
 						if (res.confirm) {
 							uni.showLoading({
-								title: '查询中',
+								title: '更新中',
 								mask: true
 							})
 							obj.$request('post', 'api/consumeRecharge/genBalance', {
@@ -283,6 +316,10 @@
 		line-height: 38rpx;
 		text-align: center;
 		margin-left: 20rpx;
+	}
+
+	.type_quickly_show {
+		width: 136rpx;
 	}
 
 	.account_show {

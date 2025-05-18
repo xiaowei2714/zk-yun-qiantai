@@ -9,26 +9,31 @@
 				<view
 					style="height: 80rpx;margin-top: 12rpx;background: #F6F7F9;border-radius: 24rpx;display: flex;align-items: center;width: 100%;">
 					<view style="width: 100%;margin-left: 34rpx;">
-						<input type="text" placeholder="请输入电费号"
+						<input v-model="number" type="text" placeholder="请输入电费号"
 							placeholder-style="font-weight: 400;font-size: 30rpx;color: #B7BAC7;width: 100%" />
 					</view>
 				</view>
 				<view style="font-weight: 400;font-size: 24rpx;margin-top: 26rpx;margin-left: 10rpx;">输入省份</view>
-				<view
-					style="height: 80rpx;margin-top: 12rpx;background: #F6F7F9;border-radius: 24rpx;display: flex;align-items: center;width: 100%;">
-					<view style="width: 100%;margin-left: 34rpx;">
-						<input type="text" placeholder="请输入省份"
-							placeholder-style="font-weight: 400;font-size: 30rpx;color: #B7BAC7;width: 100%" />
+				<view class="uni-list">
+					<view class="uni-list-cell">
+						<view class="uni-list-cell-left">
+							当前选择
+						</view>
+						<view class="uni-list-cell-db">
+							<picker @change="bindPickerChange" :value="area" :range="areaData">
+								<view class="uni-input">{{ areaData[area] }}</view>
+							</picker>
+						</view>
 					</view>
 				</view>
 			</view>
 			<view style="padding: 30rpx;">
-				<view style="background: #3742C5;border-radius: 32rpx;font-weight: bold;font-size: 28rpx;color: #FFFFFF;text-align: center;height: 80rpx;
-					line-height: 80rpx;">确认查询</view>
+				<view @click="confirmSubmit" class="find_content">确认查询</view>
 			</view>
-			
 		</view>
-		<view v-else style="box-shadow: 0rpx 6rpx 32rpx 2rpx rgba(0,0,0,0.08);border-radius: 32rpx;position: relative;padding: 40rpx;">
+
+		<view v-else
+			style="box-shadow: 0rpx 6rpx 32rpx 2rpx rgba(0,0,0,0.08);border-radius: 32rpx;position: relative;padding: 40rpx;">
 			<view @click="changeType" style="width: 196rpx;height: 64rpx;background: #E5E6F8;border-radius: 0rpx 32rpx 0rpx 32rpx;position: absolute;top: 0;right: 0;
 				font-weight: 400;font-size: 24rpx;color: #3742C5;text-align: center;line-height: 64rpx;">切换单个查询</view>
 			<view style="display: flex;align-items: center;">
@@ -38,52 +43,81 @@
 				<view style="margin-left: 6rpx;font-weight: 400;font-size: 24rpx;margin-top: -5rpx;">电费批量查询</view>
 			</view>
 			<view style="margin-top: 20rpx;">
-				<view style="font-weight: 400;font-size: 28rpx;color: #C7CAD2;">当前已导入<span style="color: #000000;">0</span>个电费号码</view>
+				<view style="font-weight: 400;font-size: 28rpx;color: #C7CAD2;">当前已导入<span
+						style="color: #000000;">{{ numbers_txt.length }}</span>个电费号码</view>
 			</view>
 			<view @click="pldr_show = true" style="margin-top: 40rpx;background: #3742C5;border-radius: 32rpx;font-weight: bold;font-size: 28rpx;color: #FFFFFF;text-align: center;height: 80rpx;
 				line-height: 80rpx;">点击一键导入</view>
 		</view>
-		<view v-if="type == 1" style="margin-top: 40rpx;box-shadow: 0rpx 6rpx 32rpx 2rpx rgba(0,0,0,0.08);border-radius: 32rpx;">
-			<view style="padding: 30rpx;display: flex;align-items: center;">
-				<view style="font-weight: bold;font-size: 32rpx;">19999923220</view>
-				<view style="margin-left: 32rpx;width: 144rpx;height: 54rpx;background: #E5E6F8;border-radius: 20rpx 0rpx 20rpx 0rpx;font-weight: 500;
-					font-size: 26rpx;color: #3742C5;text-align: center;line-height: 54rpx;">河北</view>
+
+		<view v-if="type == 1 && cur_number !== ''" class="res">
+			<view class="res_number_line">
+				<view class="res_number">{{ cur_number }}</view>
+				<view class="res_area">{{ areaData[cur_area] }}</view>
 			</view>
 			<view style="width: 100%;height: 1rpx;background-color: #F2F2F2;"></view>
 			<view style="padding: 30rpx;">
-				<view style="font-weight: bold;font-size: 32rpx;color: #3742C5;width: 100%;text-align: center;">当前余额：594.80</view>
-				<view v-for="(item, index) in 6" :key="index" style="margin-top: 42rpx;display: flex;justify-content: space-between;align-items: center;">
-					<view style="font-weight: 400;font-size: 28rpx;color: #757B8C;">2025-03-23 13:22</view>
-					<view style="font-weight: bold;font-size: 28rpx;">￥ 294.80</view>
+				<view class="res_balance">
+					<span v-if="account != ''">最新记录</span>
+					<span v-else>当前</span>
+					余额：{{ cur_balance }}
+				</view>
+				<view v-for="(item, index) in cur_list" :key="index"
+					style="margin-top: 42rpx;display: flex;justify-content: space-between;align-items: center;">
+					<view style="font-weight: 400;font-size: 28rpx;color: #757B8C;">{{ item.time }}</view>
+					<view style="font-weight: bold;font-size: 28rpx;">￥ {{ item.balance }}</view>
 				</view>
 			</view>
 		</view>
-		<view v-if="type == 2" style="padding: 30rpx;margin-top: 40rpx;">
-			<view v-for="(item, index) in 8" :key="index" style="font-weight: 400;font-size: 28rpx;color: #757B8C;margin-bottom: 52rpx;">19999992520 河北</view>
-			<view style="margin-top: 92rpx;height: 80rpx;background: #3742C5;border-radius: 32rpx;font-weight: bold;font-size: 28rpx;color: #FFFFFF;
+
+
+		<view v-if="go_batch_confirm" style="padding: 30rpx;margin-top: 40rpx;">
+			<view v-for="(item, index) in numbers_txt" :key="index"
+				style="font-weight: 400;font-size: 28rpx;color: #757B8C;margin-bottom: 52rpx;">{{ item }}</view>
+			<view @click="confirmBatchSubmit" style="margin-top: 92rpx;height: 80rpx;background: #3742C5;border-radius: 32rpx;font-weight: bold;font-size: 28rpx;color: #FFFFFF;
 				text-align: center;line-height: 80rpx;">确认查询</view>
 		</view>
-		
-		
-		
+		<view v-if="type == 2 && batch_data.length !== ''" class="res">
+			<view v-for="(item, index) in batch_data" :key="index" class="res">
+				<view class="res_number_line">
+					<view class="res_number">{{ item.number }}</view>
+					<view v-if="!item.cs" index class="res_msg"> {{ item.msg }}</view>
+					<view v-if="item.cs" class="res_area">{{ item.area }}</view>
+				</view>
+				<view style="width: 100%;height: 1rpx;background-color: #F2F2F2;"></view>
+				<view v-if="item.cs" style="padding: 30rpx;">
+					<view class="res_balance">
+						当前余额：{{ item.balance }}
+					</view>
+				</view>
+			</view>
+		</view>
+
+
 		<u-popup :show="pldr_show" mode="center" :round="32" :closeable="true" @close="pldr_show = false">
 			<view style="width: 560rpx;background: white;border-radius: 32rpx;">
-				<view style="height: 78rpx;background: #E3E8FF;border-radius: 32rpx 32rpx 0rpx 0rpx;font-weight: bold;font-size: 30rpx;line-height: 78rpx;text-align: center;">
+				<view
+					style="height: 78rpx;background: #E3E8FF;border-radius: 32rpx 32rpx 0rpx 0rpx;font-weight: bold;font-size: 30rpx;line-height: 78rpx;text-align: center;">
 					输入框
 				</view>
 				<view style="padding: 34rpx;">
 					<view style="padding: 30rpx;background: #F6F7F9;border-radius: 32rpx;">
-						<u-textarea v-model="numbers" border="none" style="font-weight: 400;font-size: 28rpx;background-color: #F6F7F9;" autoHeight height="204rpx" placeholder="请输入..." placeholder-style="font-weight: 400;font-size: 28rpx;color: #A9ABB6;" ></u-textarea>
+						<u-textarea v-model="numbers" border="none"
+							style="font-weight: 400;font-size: 28rpx;background-color: #F6F7F9;" height="150rpx"
+							placeholder="请输入电费号 地区"
+							placeholder-style="font-weight: 400;font-size: 28rpx;color: #A9ABB6;"></u-textarea>
 					</view>
-					<view style="width: 100%;text-align: center;margin-top: 32rpx;font-weight: 400;font-size: 24rpx;color: #757B8C;">注：多个号码请换行隔开，一行填写一个号码</view>
+					<view
+						style="width: 100%;text-align: center;margin-top: 32rpx;font-weight: 400;font-size: 24rpx;color: #757B8C;">
+						注：多个号码请换行隔开，一行填写一个号码</view>
 					<view style="display: flex;justify-content: center;margin-top: 40rpx;">
-						<view style="width: 260rpx;height: 80rpx;background: #3742C5;border-radius: 18rpx;font-weight: bold;font-size: 28rpx;color: #FFFFFF;text-align: center;
+						<view @click="moreLineConfirm" style="width: 260rpx;height: 80rpx;background: #3742C5;border-radius: 18rpx;font-weight: bold;font-size: 28rpx;color: #FFFFFF;text-align: center;
 							line-height: 80rpx;">确定</view>
 					</view>
 				</view>
 			</view>
 		</u-popup>
-		<nav-bar :nav-index="1"/>
+		<nav-bar :nav-index="1" />
 	</view>
 </template>
 
@@ -97,30 +131,271 @@
 			return {
 				type: 1,
 				pldr_show: false,
-				numbers: ''
+				number: '',
+				area: 0,
+				numbers: '',
+				numbers_txt: [],
+				can_click: true,
+				cur_number: '',
+				cur_balance: 0,
+				cur_area: 0,
+				cur_list: [],
+				batch_data: [],
+				go_batch_confirm: false,
+				areaData: [
+					"北京", "天津", "辽宁", "江苏", "浙江",
+					"山东", "湖南", "陕西", "冀北", "新疆",
+					"宁夏", "安徽", "重庆", "福建", "河南",
+					"青海", "湖北", "蒙东", "黑龙江", "吉林",
+					"上海", "甘肃", "山西", "四川", "江西", "河北"
+				],
+				account: ''
 			};
 		},
-		onLoad() {
-			
+		onLoad(options) {
+			this.getQueryConfig()
+
+			this.account = options.account
+			if (options.account) {
+				this.getHistory(options.account)
+			}
 		},
 		methods: {
+			getQueryConfig() {
+				uni.showLoading({
+					title: '加载中',
+					mask: true
+				})
+				this.$request('get', 'api/ConsumeQuery/queryElectricityConfig', {}).then(res => {
+					uni.hideLoading()
+					if (res.code) {
+						this.query_price = res.data.query
+					}
+				})
+			},
+			bindPickerChange: function(e) {
+				console.log('picker发送选择改变，携带值为', e.detail.value)
+				this.area = e.detail.value
+			},
+			moreLineConfirm() {
+				this.pldr_show = false
+				this.numbers_txt = this.numbers.split('\n')
+				this.go_batch_confirm = this.numbers_txt.length !== 0
+				this.batch_data = []
+			},
 			changeType() {
 				if (this.type == 1) {
 					this.type = 2
 					uni.setNavigationBarTitle({
-					  title: '电费批量查询'
+						title: '电费批量查询'
 					})
 				} else {
 					this.type = 1
 					uni.setNavigationBarTitle({
-					  title: '电费查询'
+						title: '电费查询'
 					})
 				}
+			},
+			confirmSubmit() {
+				if (this.can_click === false) {
+					return uni.$u.toast('正在查询中...')
+				}
+
+				if (this.query_price === '') {
+					uni.$u.toast('未设置查询余额功能，请联系客服')
+					return
+				}
+
+				this.can_click = false
+				this.cur_number = ''
+				this.cur_balance = 0
+				this.cur_isp = ''
+				this.account = ''
+				this.cur_list = []
+
+				const obj = this
+				uni.showModal({
+					title: '提示',
+					content: '需要花费' + obj.query_price + 'Y币，确定要查询余额吗？',
+					showCancel: true, // 显示取消按钮
+					cancelText: '取消',
+					confirmText: '确定',
+					success: function(res) {
+						if (res.confirm) {
+							if (!obj.number) {
+								obj.can_click = true
+								return uni.$u.toast('请正确输入电费号')
+							}
+							if (!/^[a-zA-Z0-9]+$/.test(obj.number)) {
+								obj.can_click = true
+								return uni.$u.toast('请正确输入电费号')
+							}
+
+							obj.$request('post', 'api/ConsumeQuery/queryElectricity', {
+								number: obj.number,
+								area: obj.area,
+							}).then(res => {
+								obj.can_click = true
+								uni.hideLoading()
+								if (res.code) {
+									obj.cur_number = res.data.number
+									obj.cur_balance = res.data.balance
+									obj.cur_area = res.data.area
+									obj.cur_list = res.data.list
+									uni.$u.toast('查询成功')
+								} else {
+									uni.$u.toast(res.msg)
+								}
+							})
+						} else if (res.cancel) {
+							obj.can_click = true
+						}
+					}
+				});
+			},
+			confirmBatchSubmit() {
+				if (this.can_click === false) {
+					return uni.$u.toast('正在查询中...')
+				}
+				this.can_click = false
+
+				const price = this.query_price * this.numbers_txt.length
+				const obj = this
+				uni.showModal({
+					title: '提示',
+					content: '需要花费' + price + 'Y币，确定要查询余额吗？',
+					showCancel: true, // 显示取消按钮
+					cancelText: '取消',
+					confirmText: '确定',
+					success: function(res) {
+						if (res.confirm) {
+							if (obj.numbers_txt.length == 0) return uni.$u.toast('请正确输入充值电费号')
+
+							obj.$request('post', 'api/ConsumeQuery/batchQueryElectricity', {
+								batch_data: obj.numbers_txt,
+							}).then(res => {
+								obj.can_click = true
+								uni.hideLoading()
+								if (res.code) {
+									obj.go_batch_confirm = false
+									obj.batch_data = res.data
+									uni.$u.toast('查询成功')
+								} else {
+									uni.$u.toast(res.msg)
+								}
+							})
+						} else if (res.cancel) {
+							obj.can_click = true
+						}
+					}
+				});
+			},
+			getHistory(value) {
+				this.$request('get', 'api/ConsumeQuery/accountHistory', {
+					number: value,
+					type: 2
+				}).then(res => {
+					uni.hideLoading()
+					if (res.code) {
+						this.cur_number = res.data.number
+						this.cur_balance = res.data.balance
+						this.cur_area = res.data.area
+						this.cur_list = res.data.list
+					} else {
+						uni.$u.toast(res.msg)
+					}
+				})
 			}
 		}
 	}
 </script>
 
 <style lang="scss">
+	.uni-list-cell {
+		margin-top: 10rpx;
+		position: relative;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		background: #f6f7f9;
+		font-weight: 400;
+		font-size: 30rpx;
+		width: 100%;
+		border-radius: 12px;
+	}
 
+	.uni-list-cell-left {
+		white-space: nowrap;
+		font-size: 14px;
+		padding: 0 15px;
+		color: #B7BAC7;
+	}
+
+	.uni-list-cell-db,
+	.uni-list-cell-right {
+		flex: 1;
+	}
+
+	.uni-input {
+		height: 25px;
+		padding: 7px 12px;
+		line-height: 25px;
+		font-size: 14px;
+		flex: 1;
+		text-align: center;
+	}
+
+	.find_content {
+		background: #3742C5;
+		border-radius: 32rpx;
+		font-weight: bold;
+		font-size: 28rpx;
+		color: #FFFFFF;
+		text-align: center;
+		height: 80rpx;
+		line-height: 80rpx;
+	}
+
+	.res {
+		margin-top: 40rpx;
+		box-shadow: 0rpx 6rpx 32rpx 2rpx rgba(0, 0, 0, 0.08);
+		border-radius: 32rpx;
+	}
+
+	.res_number_line {
+		padding: 30rpx;
+		display: flex;
+		align-items: center;
+	}
+
+	.res_number {
+		font-weight: bold;
+		font-size: 32rpx;
+	}
+
+	.res_area {
+		margin-left: 32rpx;
+		width: 144rpx;
+		height: 54rpx;
+		background: #E5E6F8;
+		border-radius: 20rpx 0rpx 20rpx 0rpx;
+		font-weight: 500;
+		font-size: 26rpx;
+		color: #3742C5;
+		text-align: center;
+		line-height: 54rpx;
+	}
+
+	.res_msg {
+		margin-left: 32rpx;
+	}
+
+	.res_balance {
+		font-weight: bold;
+		font-size: 32rpx;
+		color: #3742C5;
+		width: 100%;
+		text-align: center;
+	}
 </style>

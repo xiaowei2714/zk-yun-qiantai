@@ -157,12 +157,25 @@
 					return uni.$u.toast('正在充值中...')
 				}
 				this.can_click = false
+				uni.showLoading({
+					title: '充值中',
+					mask: true
+				})
 				
 				if (this.type == 1) { // 单个充值
-					if (!this.form_data.single_name) return uni.$u.toast('请正确输入记住姓名')
-					if (!this.form_data.single_phone) return uni.$u.toast('请正确输入手机号')
-					if (!this.activeMeal) return uni.$u.toast('请选择充值金额')
+					if (!this.form_data.single_phone) {
+						this.can_click = true
+						uni.hideLoading()
+						return uni.$u.toast('请正确输入手机号')
+					}
+					if (!this.activeMeal) {
+						this.can_click = true
+						uni.hideLoading()
+						return uni.$u.toast('请选择充值金额')
+					}
 					if (!/^1[3-9]\d{9}$/.test(this.form_data.single_phone)) {
+						this.can_click = true
+						uni.hideLoading()
 						return uni.$u.toast('请正确输入手机号')
 					}
 
@@ -183,11 +196,19 @@
 						}
 					})
 				} else { // 批量充值
-					if (!this.numbers_txt) return uni.$u.toast('请正确输入充值号码')
-					if (!this.activeMeal) return uni.$u.toast('请选择充值金额')
+					if (!this.numbers_txt) {
+						this.can_click = true
+						uni.hideLoading()
+						return uni.$u.toast('请正确输入充值号码')
+					}
+					if (!this.activeMeal) {
+						this.can_click = true
+						uni.hideLoading()
+						return uni.$u.toast('请选择充值金额')
+					}
 
 					this.$request('post', 'api/consumeRecharge/batchPhoneRecharge', {
-						batchData: this.numbers_txt,
+						batch_data: this.numbers_txt,
 						meal_id: this.activeMeal.id,
 						meal_discount: this.activeMeal.discount,
 						meal_discounted_price: this.activeMeal.discountedPrice,

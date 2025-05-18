@@ -36,6 +36,7 @@
 				</view>
 				<view v-else style="font-weight: bold;font-size: 32rpx;margin-left: 20rpx;">点击登录</view>
 			</view>
+
 			<view style="margin-top: 80rpx;font-weight: bold;font-size: 32rpx;">话费订单</view>
 			<view style="margin-top: 48rpx;display: flex;flex-wrap: wrap;">
 				<view @click="toOrderList('mobile', 0)" style="width: 25%;text-align: center;">
@@ -45,7 +46,7 @@
 					<view style="margin-top: 10rpx;font-weight: 400;font-size: 24rpx;color: #9C9EA8;">全部</view>
 				</view>
 				<view @click="toOrderList('mobile', 1)" class="num_p_show">
-					<view class="num_show">
+					<view v-if="cou.pi > 0" class="num_show">
 						{{ cou.pi }}
 					</view>
 					<view>
@@ -54,7 +55,7 @@
 					<view style="margin-top: 10rpx;font-weight: 400;font-size: 24rpx;color: #9C9EA8;">充值中</view>
 				</view>
 				<view @click="toOrderList('mobile', 2)" class="num_p_show">
-					<view class="num_show">
+					<view v-if="cou.ps > 0" class="num_show">
 						{{ cou.ps }}
 					</view>
 					<view>
@@ -63,7 +64,7 @@
 					<view style="margin-top: 10rpx;font-weight: 400;font-size: 24rpx;color: #9C9EA8;">已完成</view>
 				</view>
 				<view @click="toOrderList('mobile', 3)" class="num_p_show">
-					<view class="num_show">
+					<view v-if="cou.pf > 0" class="num_show">
 						{{ cou.pf }}
 					</view>
 					<view>
@@ -72,6 +73,7 @@
 					<view style="margin-top: 10rpx;font-weight: 400;font-size: 24rpx;color: #9C9EA8;">已取消</view>
 				</view>
 			</view>
+
 			<view style="margin-top: 66rpx;font-weight: bold;font-size: 32rpx;">电费订单</view>
 			<view style="margin-top: 48rpx;display: flex;flex-wrap: wrap;">
 				<view @click="toOrderList('electricity', 0)" style="width: 25%;text-align: center;">
@@ -81,7 +83,7 @@
 					<view style="margin-top: 10rpx;font-weight: 400;font-size: 24rpx;color: #9C9EA8;">全部</view>
 				</view>
 				<view @click="toOrderList('electricity', 1)" class="num_p_show">
-					<view class="num_show">
+					<view v-if="cou.ei > 0" class="num_show">
 						{{ cou.ei }}
 					</view>
 					<view>
@@ -90,7 +92,7 @@
 					<view style="margin-top: 10rpx;font-weight: 400;font-size: 24rpx;color: #9C9EA8;">充值中</view>
 				</view>
 				<view @click="toOrderList('electricity', 2)" class="num_p_show">
-					<view class="num_show">
+					<view v-if="cou.es > 0" class="num_show">
 						{{ cou.es }}
 					</view>
 					<view>
@@ -99,7 +101,7 @@
 					<view style="margin-top: 10rpx;font-weight: 400;font-size: 24rpx;color: #9C9EA8;">已完成</view>
 				</view>
 				<view @click="toOrderList('electricity', 3)" class="num_p_show">
-					<view class="num_show">
+					<view v-if="cou.ef > 0" class="num_show">
 						{{ cou.ef }}
 					</view>
 					<view>
@@ -108,6 +110,44 @@
 					<view style="margin-top: 10rpx;font-weight: 400;font-size: 24rpx;color: #9C9EA8;">已取消</view>
 				</view>
 			</view>
+
+			<view style="margin-top: 80rpx;font-weight: bold;font-size: 32rpx;">话费快充订单</view>
+			<view style="margin-top: 48rpx;display: flex;flex-wrap: wrap;">
+				<view @click="toOrderList('quickly', 0)" style="width: 25%;text-align: center;">
+					<view>
+						<image src="/static/order-quanb.png" style="width: 45rpx;height: 45rpx;" mode=""></image>
+					</view>
+					<view style="margin-top: 10rpx;font-weight: 400;font-size: 24rpx;color: #9C9EA8;">全部</view>
+				</view>
+				<view @click="toOrderList('quickly', 1)" class="num_p_show">
+					<view v-if="cou.ki > 0"class="num_show">
+						{{ cou.ki }}
+					</view>
+					<view>
+						<image src="/static/order-chongzz.png" style="width: 45rpx;height: 45rpx;" mode=""></image>
+					</view>
+					<view style="margin-top: 10rpx;font-weight: 400;font-size: 24rpx;color: #9C9EA8;">充值中</view>
+				</view>
+				<view @click="toOrderList('quickly', 2)" class="num_p_show">
+					<view v-if="cou.ks > 0" class="num_show">
+						{{ cou.ks }}
+					</view>
+					<view>
+						<image src="/static/order-yiwanc.png" style="width: 45rpx;height: 45rpx;" mode=""></image>
+					</view>
+					<view style="margin-top: 10rpx;font-weight: 400;font-size: 24rpx;color: #9C9EA8;">已完成</view>
+				</view>
+				<view @click="toOrderList('quickly', 3)" class="num_p_show">
+					<view v-if="cou.kf > 0" class="num_show">
+						{{ cou.kf }}
+					</view>
+					<view>
+						<image src="/static/order-yiqux.png" style="width: 45rpx;height: 45rpx;" mode=""></image>
+					</view>
+					<view style="margin-top: 10rpx;font-weight: 400;font-size: 24rpx;color: #9C9EA8;">已取消</view>
+				</view>
+			</view>
+
 		</view>
 		<nav-bar :nav-index="1" />
 	</view>

@@ -68,11 +68,7 @@
 			</view>
 			<view style="margin-top: 36rpx;display: flex;justify-content: space-between;align-items: center;">
 				<view class="dft">合计支付</view>
-				<view style="font-weight: bold;font-size: 36rpx;color: #F63232;">{{ infoObj.pay_price }} Y</view>
-			</view>
-			<view style="margin-top: 36rpx;display: flex;justify-content: space-between;align-items: center;">
-				<view class="dft">合计支付</view>
-				<view style="font-weight: bold;font-size: 36rpx;color: #F63232;">{{ infoObj.us_price }} USDT</view>
+				<view style="font-weight: bold;font-size: 36rpx;color: #EB8E26;">{{ infoObj.pay_price }} Y</view>
 			</view>
 		</view>
 	</view>
