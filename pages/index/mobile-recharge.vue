@@ -223,7 +223,6 @@
 						}
 					})
 				}
-
 			},
 			stringToLines(text, removeEmpty = true) {
 				let lines = text.split(/\r?\n|\r/);

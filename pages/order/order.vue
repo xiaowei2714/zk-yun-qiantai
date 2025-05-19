@@ -120,7 +120,7 @@
 					<view style="margin-top: 10rpx;font-weight: 400;font-size: 24rpx;color: #9C9EA8;">全部</view>
 				</view>
 				<view @click="toOrderList('quickly', 1)" class="num_p_show">
-					<view v-if="cou.ki > 0"class="num_show">
+					<view v-if="cou.ki > 0" class="num_show">
 						{{ cou.ki }}
 					</view>
 					<view>
@@ -140,6 +140,43 @@
 				<view @click="toOrderList('quickly', 3)" class="num_p_show">
 					<view v-if="cou.kf > 0" class="num_show">
 						{{ cou.kf }}
+					</view>
+					<view>
+						<image src="/static/order-yiqux.png" style="width: 45rpx;height: 45rpx;" mode=""></image>
+					</view>
+					<view style="margin-top: 10rpx;font-weight: 400;font-size: 24rpx;color: #9C9EA8;">已取消</view>
+				</view>
+			</view>
+
+			<view style="margin-top: 80rpx;font-weight: bold;font-size: 32rpx;">礼品卡订单</view>
+			<view style="margin-top: 48rpx;display: flex;flex-wrap: wrap;">
+				<view @click="toOrderList('card', 0)" style="width: 25%;text-align: center;">
+					<view>
+						<image src="/static/order-quanb.png" style="width: 45rpx;height: 45rpx;" mode=""></image>
+					</view>
+					<view style="margin-top: 10rpx;font-weight: 400;font-size: 24rpx;color: #9C9EA8;">全部</view>
+				</view>
+				<view @click="toOrderList('card', 1)" class="num_p_show">
+					<view v-if="cou.ci > 0" class="num_show">
+						{{ cou.ci }}
+					</view>
+					<view>
+						<image src="/static/order-chongzz.png" style="width: 45rpx;height: 45rpx;" mode=""></image>
+					</view>
+					<view style="margin-top: 10rpx;font-weight: 400;font-size: 24rpx;color: #9C9EA8;">充值中</view>
+				</view>
+				<view @click="toOrderList('card', 2)" class="num_p_show">
+					<view v-if="cou.cs > 0" class="num_show">
+						{{ cou.cs }}
+					</view>
+					<view>
+						<image src="/static/order-yiwanc.png" style="width: 45rpx;height: 45rpx;" mode=""></image>
+					</view>
+					<view style="margin-top: 10rpx;font-weight: 400;font-size: 24rpx;color: #9C9EA8;">已完成</view>
+				</view>
+				<view @click="toOrderList('card', 3)" class="num_p_show">
+					<view v-if="cou.cf > 0" class="num_show">
+						{{ cou.cf }}
 					</view>
 					<view>
 						<image src="/static/order-yiqux.png" style="width: 45rpx;height: 45rpx;" mode=""></image>

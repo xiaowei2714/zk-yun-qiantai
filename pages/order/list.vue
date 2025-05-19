@@ -31,7 +31,10 @@
 								<view v-if="item.type == 1 || item.type == 2" class="type_show">
 									{{ nameShow(item.type) }}
 								</view>
-								<view v-if="item.type == 3" class="type_show type_quickly_show">{{ nameShow(item.type) }}</view>
+								<view v-if="item.type == 3" class="type_show type_quickly_show">
+									{{ nameShow(item.type) }}</view>
+								<view v-if="item.type == 4" class="type_show type_card_show">{{ nameShow(item.type) }}
+								</view>
 							</view>
 							<view style="margin-top: 10rpx;font-weight: 500;font-size: 24rpx;color: #A9ABB6;">
 								{{ item.time }}
@@ -44,7 +47,11 @@
 							<view style="display: flex;justify-content: space-between;">
 								<view style="display: flex;align-items: center;">
 									<view>
-										<image src="/static/order-huaf.png" style="width: 72rpx;height: 72rpx;" mode="">
+										<image v-if="item.type == 1 || item.type == 3" src="/static/order-huaf.png" style="width: 72rpx;height: 72rpx;" mode="">
+										</image>
+										<image v-if="item.type == 2" src="/static/qb-dfmx.png" style="width: 72rpx;height: 72rpx;" mode="">
+										</image>
+										<image v-if="item.type == 4" src="/static/lpk.png" style="width: 72rpx;height: 72rpx;" mode="">
 										</image>
 									</view>
 									<view class="account_show">
@@ -84,12 +91,13 @@
 							</view>
 							<view
 								style="display: flex;justify-content: space-between;align-items: center;margin-top: 18rpx;">
-								<view style="font-weight: 400;font-size: 28rpx;color: #3742C5;">更多</view>
+								<view @click="detail(item.id)" style="font-weight: 400;font-size: 28rpx;color: #3742C5;">更多</view>
 								<view style="display: flex;">
 									<view v-if="item.status == 1" @click="cancelOrder(item.id)" class="cancel_order">
 										取消订单
 									</view>
-									<view v-if="item.status == 3" @click="genBalance(item.id)" class="gen_balance">更新余额
+									<view v-if="not_card && item.status == 3" @click="genBalance(item.id)"
+										class="gen_balance">更新余额
 									</view>
 									<view @click="detail(item.id)" class="go_detail">查看详情</view>
 								</view>
@@ -112,6 +120,7 @@
 				search: '',
 				query_p: '',
 				query_e: '',
+				not_card: true
 			};
 		},
 		onLoad(options) {
@@ -131,6 +140,12 @@
 				uni.setNavigationBarTitle({
 					title: '话费快充订单'
 				})
+			} else if (options.type == 'card') {
+				uni.setNavigationBarTitle({
+					title: '礼品卡订单'
+				})
+
+				this.not_card = false
 			}
 
 			let newActiveTab = Number(options.index)
@@ -161,7 +176,6 @@
 				})
 			},
 			nameShow(value) {
-				console.log(11, value)
 				switch (value) {
 					case 1:
 						return '话费'
@@ -181,7 +195,6 @@
 			},
 			loadMoreData() {
 				console.log(1111)
-
 			},
 			detail(id) {
 				uni.navigateTo({
@@ -227,9 +240,9 @@
 				});
 			},
 			genBalance(id) {
-				let price = this.query_e
-				if (this.type == 'mobile') {
-					price = this.query_p
+				let price = this.query_p
+				if (this.type == 'electricity') {
+					price = this.query_e
 				}
 
 				if (price === '') {
@@ -320,6 +333,10 @@
 
 	.type_quickly_show {
 		width: 136rpx;
+	}
+
+	.type_card_show {
+		width: 102rpx;
 	}
 
 	.account_show {

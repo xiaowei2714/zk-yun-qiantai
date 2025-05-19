@@ -68,7 +68,7 @@
 			</view>
 			<view style="margin-top: 36rpx;display: flex;justify-content: space-between;align-items: center;">
 				<view class="dft">合计支付</view>
-				<view style="font-weight: bold;font-size: 36rpx;color: #EB8E26;">{{ infoObj.pay_price }} Y</view>
+				<view style="font-weight: bold;font-size: 36rpx;color: #EB8E26;">{{ infoObj.pay_price }} Y币</view>
 			</view>
 		</view>
 	</view>
