@@ -121,9 +121,6 @@
 		onLoad() {
 			this.getInfo()
 		},
-		onShow() {
-			this.getInfo()
-		},
 		methods: {
 			getInfo() {
 				uni.showLoading({

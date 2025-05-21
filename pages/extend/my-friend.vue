@@ -127,9 +127,8 @@
 				this.getList()
 			},
 			discountSet(id, name) {
-				this.setModleShow = true
 				this.userId = id,
-					this.userName = name
+				this.userName = name
 
 				uni.showLoading({
 					title: '正在获取配置中',
@@ -141,6 +140,7 @@
 				}).then(res => {
 					uni.hideLoading()
 					if (res.code) {
+						this.setModleShow = true
 						this.mealList = res.data
 					} else {
 						uni.$u.toast(res.msg)

@@ -125,9 +125,6 @@
 		onLoad() {
 			this.getInfo()
 		},
-		onShow() {
-			this.getInfo()
-		},
 		methods: {
 			toOrder() {
 				uni.reLaunch({
