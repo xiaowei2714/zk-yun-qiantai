@@ -68,8 +68,8 @@
 							</view>
 							<view style="margin-left: 18rpx;width: 100%;">
 								<view style="display: flex;justify-content: space-between;">
-									<view style="font-weight: bold;font-size: 30rpx;">{{item.desc}}</view>
-									<view style="font-weight: bold;font-size: 30rpx;color: #EB8E26;">
+									<view style="font-weight: bold;font-size: 25rpx;">{{item.desc}}</view>
+									<view style="font-weight: bold;font-size: 25rpx;color: #EB8E26;">
 										<span v-if="item.change_type == 2">-</span>
 										<span v-if="item.change_type == 1">+</span>
 										{{item.change_money}} Y币
