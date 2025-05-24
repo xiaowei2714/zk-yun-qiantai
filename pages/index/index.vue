@@ -93,7 +93,7 @@
 					border-radius: 32rpx 32rpx 32rpx 32rpx;position: relative;padding-bottom: 30rpx;">
 					<view style="position: absolute;top: 0;left: 0;background-color: #E5E6F8;width: 126rpx;height: 48rpx;border-radius: 32rpx 0rpx 32rpx 0rpx;
 						">
-						<view style="text-align: center;line-height: 48rpx;font-weight: 500;font-size: 26rpx;color: #3742C5;">4.33折</view>
+						<view style="text-align: center;line-height: 48rpx;font-weight: 500;font-size: 26rpx;color: #3742C5;">{{ card_discount}}折</view>
 					</view>
 					<view style="width: 100%;display: flex;justify-content: center;margin-top: 48rpx;">
 						<view style="border-radius: 28rpx;border: 2rpx solid #ECEEF4;width: 110rpx;height: 110rpx;">
@@ -127,6 +127,7 @@
 			return {
 				shop_name: '',
 				index_banner: '',
+				card_discount: '',
 				notice: []
 			}
 		},
@@ -144,6 +145,7 @@
 					if (res.code) {
 						this.shop_name = res.data.shop_name
 						this.index_banner = res.data.index_banner
+						this.card_discount = res.data.card_discount
 						this.notice = res.data.notice
 					}
 				})
