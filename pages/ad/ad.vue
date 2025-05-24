@@ -6,7 +6,8 @@
 			</view>
 		</u-navbar>
 		<view style="padding: 30rpx;margin-top: 80rpx;">
-			<view v-for="(item, index) in list" :key="index" style="padding: 30rpx;box-shadow: 0rpx 6rpx 32rpx 2rpx rgba(0,0,0,0.08);border-radius: 32rpx;margin-top: 38rpx;">
+			<view v-for="(item, index) in list" :key="index"
+				style="padding: 30rpx;box-shadow: 0rpx 6rpx 32rpx 2rpx rgba(0,0,0,0.08);border-radius: 32rpx;margin-top: 38rpx;">
 				<view style="display: flex;justify-content: space-between;align-items: center;">
 					<view style="display: flex;align-items: center;">
 						<view style="width: 44rpx;height: 44rpx;background: #464D57;border-radius: 28rpx;text-align: center;line-height: 44rpx;color: white;
@@ -22,20 +23,31 @@
 						</view>
 						<view style="margin-left: 10rpx;font-weight: 400;font-size: 24rpx;color: #3742C5;">上架</view>
 						<view style="margin-left: 10rpx;">
-							<u-switch @change="adStatusChange(item.id)" v-model="item.status_b" activeColor="#2EBD85" size="18"></u-switch>
+							<u-switch @change="adStatusChange(item.id)" v-model="item.status_b" activeColor="#2EBD85"
+								size="18"></u-switch>
 						</view>
 					</view>
 				</view>
 				<view style="display: flex;margin-top: 20rpx;align-items: center;">
-					<view style="font-weight: 500;font-size: 24rpx;color: #A9ABB6;">成单量 302</view>
-					<view style="width: 1rpx;height: 20rpx;background-color: #E0E1E5;margin-left: 20rpx;margin-right: 20rpx;"></view>
-					<view style="font-weight: 500;font-size: 24rpx;color: #A9ABB6;">成单率 96.50%</view>
+					<view style="font-weight: 500;font-size: 24rpx;color: #A9ABB6;">成单量 {{ item.s_count }}</view>
+					<view
+						style="width: 1rpx;height: 20rpx;background-color: #E0E1E5;margin-left: 20rpx;margin-right: 20rpx;">
+					</view>
+					<view style="font-weight: 500;font-size: 24rpx;color: #A9ABB6;">成单率 {{ item.rate }}%</view>
+					<view
+						style="width: 1rpx;height: 20rpx;background-color: #E0E1E5;margin-left: 20rpx;margin-right: 20rpx;">
+					</view>
+					<view v-if="item.type == 1" style="font-weight: 500;font-size: 24rpx;color: #FFCC33;">买入
+					</view>
+					<view v-else style="font-weight: 500;font-size: 24rpx;color: #800080;">卖出
+					</view>
 				</view>
 				<view style="display: flex;margin-top: 20rpx;align-items: center;">
 					<view>
 						<image src="/static/jy-time.png" style="width: 21rpx;height: 24rpx;" mode=""></image>
 					</view>
-					<view style="margin-left: 10rpx;font-weight: 500;font-size: 24rpx;color: #A9ABB6;">{{item.pay_time}}分钟</view>
+					<view style="margin-left: 10rpx;font-weight: 500;font-size: 24rpx;color: #A9ABB6;">
+						{{item.pay_time}}分钟</view>
 				</view>
 				<view style="margin-top: 20rpx;display: flex;justify-content: space-between;align-items: center;">
 					<view>
@@ -43,34 +55,49 @@
 						<span style="font-weight: bold;font-size: 44rpx;">{{item.price}}</span>
 					</view>
 					<view>
-						<view v-if="item.pay_type.includes('zfb')" style="display: flex;align-items: center;justify-content: flex-end;">
+						<view v-if="item.pay_type.includes('zfb')"
+							style="display: flex;align-items: center;justify-content: flex-end;">
 							<view style="font-weight: 400;font-size: 24rpx;color: #A9ABB6;">支付宝</view>
-							<view style="width: 6rpx;height: 20rpx;background: #06B4FD;border-radius: 4rpx;margin-left: 10rpx;"></view>
+							<view
+								style="width: 6rpx;height: 20rpx;background: #06B4FD;border-radius: 4rpx;margin-left: 10rpx;">
+							</view>
 						</view>
-						<view v-if="item.pay_type.includes('yhk')" style="display: flex;align-items: center;margin-top: 14rpx;justify-content: flex-end;">
+						<view v-if="item.pay_type.includes('yhk')"
+							style="display: flex;align-items: center;margin-top: 14rpx;justify-content: flex-end;">
 							<view style="font-weight: 400;font-size: 24rpx;color: #A9ABB6;">银行借记卡</view>
-							<view style="width: 6rpx;height: 20rpx;background: #F3AF55;border-radius: 4rpx;margin-left: 10rpx;"></view>
+							<view
+								style="width: 6rpx;height: 20rpx;background: #F3AF55;border-radius: 4rpx;margin-left: 10rpx;">
+							</view>
 						</view>
-						<view v-if="item.pay_type.includes('wx')" style="display: flex;align-items: center;margin-top: 14rpx;justify-content: flex-end;">
+						<view v-if="item.pay_type.includes('wx')"
+							style="display: flex;align-items: center;margin-top: 14rpx;justify-content: flex-end;">
 							<view style="font-weight: 400;font-size: 24rpx;color: #A9ABB6;">微信</view>
-							<view style="width: 6rpx;height: 20rpx;background: #28C445;border-radius: 4rpx;margin-left: 10rpx;"></view>
+							<view
+								style="width: 6rpx;height: 20rpx;background: #28C445;border-radius: 4rpx;margin-left: 10rpx;">
+							</view>
 						</view>
-						<view v-if="item.pay_type.includes('usdt')" style="display: flex;align-items: center;margin-top: 14rpx;justify-content: flex-end;">
+						<view v-if="item.pay_type.includes('usdt')"
+							style="display: flex;align-items: center;margin-top: 14rpx;justify-content: flex-end;">
 							<view style="font-weight: 400;font-size: 24rpx;color: #A9ABB6;">USDT</view>
-							<view style="width: 6rpx;height: 20rpx;background: black;border-radius: 4rpx;margin-left: 10rpx;"></view>
+							<view
+								style="width: 6rpx;height: 20rpx;background: black;border-radius: 4rpx;margin-left: 10rpx;">
+							</view>
 						</view>
 					</view>
 				</view>
 				<view style="display: flex;justify-content: space-between;align-items: center;margin-top: 30rpx;">
 					<view>
-						
+
 						<view style="display: flex;">
 							<view style="font-weight: 400;font-size: 24rpx;color: #A9ABB6;">限额</view>
-							<view style="margin-left: 26rpx;font-weight: bold;font-size: 24rpx;">CNY {{(item.min_price * item.price).toFixed(2)}}-CNY {{(item.max_price * item.price).toFixed(2)}}</view>
+							<view style="margin-left: 26rpx;font-weight: bold;font-size: 24rpx;">CNY
+								{{(item.min_price * item.price).toFixed(2)}}-CNY
+								{{(item.max_price * item.price).toFixed(2)}}</view>
 						</view>
 						<view style="display: flex;margin-top: 15rpx;">
 							<view style="font-weight: 400;font-size: 24rpx;color: #A9ABB6;">可用</view>
-							<view style="margin-left: 26rpx;font-weight: bold;font-size: 24rpx;">{{item.num.toFixed(2)}} Y币</view>
+							<view style="margin-left: 26rpx;font-weight: bold;font-size: 24rpx;">{{item.num.toFixed(2)}}
+								Y币</view>
 						</view>
 					</view>
 					<view @click="delAd(item.id)" style="width: 164rpx;height: 64rpx;background: #FCEFF1;border-radius: 24rpx;border: 2rpx solid #F6465D;font-weight: 400;font-size: 28rpx;color: #F6465D;
@@ -86,12 +113,13 @@
 						font-size: 28rpx;color: #FFFFFF;">发布广告</view>
 				</view>
 			</view>
-			
+
 		</view>
-		
+
 		<u-popup :show="showDel" mode="center" :round="32">
 			<view style="width: 560rpx;background: white;border-radius: 32rpx;">
-				<view style="height: 78rpx;background: #E3E8FF;border-radius: 32rpx 32rpx 0rpx 0rpx;font-weight: bold;font-size: 30rpx;line-height: 78rpx;text-align: center;">
+				<view
+					style="height: 78rpx;background: #E3E8FF;border-radius: 32rpx 32rpx 0rpx 0rpx;font-weight: bold;font-size: 30rpx;line-height: 78rpx;text-align: center;">
 					温馨提示
 				</view>
 				<view style="padding: 34rpx;">
@@ -109,7 +137,8 @@
 		</u-popup>
 		<u-popup :show="showNo" mode="center" :round="32">
 			<view style="width: 560rpx;background: white;border-radius: 32rpx;">
-				<view style="height: 78rpx;background: #E3E8FF;border-radius: 32rpx 32rpx 0rpx 0rpx;font-weight: bold;font-size: 30rpx;line-height: 78rpx;text-align: center;">
+				<view
+					style="height: 78rpx;background: #E3E8FF;border-radius: 32rpx 32rpx 0rpx 0rpx;font-weight: bold;font-size: 30rpx;line-height: 78rpx;text-align: center;">
 					温馨提示
 				</view>
 				<view style="padding: 34rpx;">
@@ -125,7 +154,7 @@
 				</view>
 			</view>
 		</u-popup>
-		<nav-bar :nav-index="2"/>
+		<nav-bar :nav-index="2" />
 	</view>
 </template>
 
@@ -145,26 +174,35 @@
 				showDel: false
 			};
 		},
-		onLoad() {
-			this.getList()
-		},
 		onShow() {
 			this.getList()
 		},
 		methods: {
+			getList() {
+				uni.showLoading({
+					title: '加载中',
+					mask: true
+				})
+				this.$request('get', 'api/ad/mList').then(res => {
+					uni.hideLoading()
+					if (res.code) {
+						this.list = res.data								
+					}
+				})
+			},
 			submitDel() {
 				uni.showLoading({
 					title: '删除中',
 					mask: true
 				})
-				this.$request('post', 'api/index/delAd', {
+				this.$request('post', 'api/ad/del', {
 					id: this.id
 				}).then(res => {
 					uni.hideLoading()
 					if (res.code) {
+						this.getList()
 						uni.$u.toast('删除成功')
 						this.showDel = false
-						this.getList()
 					} else {
 						uni.$u.toast(res.msg)
 					}
@@ -179,14 +217,14 @@
 					title: '切换中',
 					mask: true
 				})
-				this.$request('post', 'api/index/adChange', {
+				this.$request('post', 'api/ad/statusChange', {
 					id: id
 				}).then(res => {
 					uni.hideLoading()
 					if (res.code) {
 						uni.$u.toast('切换成功')
-						this.getList()
 					} else {
+						this.getList()
 						uni.$u.toast(res.msg)
 					}
 				})
@@ -197,28 +235,14 @@
 				})
 			},
 			back() {
-				uni.reLaunch({
-					url: '/pages/market/market'
-				})
-			},
-			getList() {
-				uni.showLoading({
-					title: '加载中',
-					mask: true
-				})
-				this.$request('get', 'api/index/getAdList').then(res => {
-					uni.hideLoading()
-					if (res.code) {
-						this.list = res.data.list
-					}
-				})
+				this.showNo = false
 			},
 			rightClick() {
 				uni.showLoading({
 					title: '加载中',
 					mask: true
 				})
-				this.$request('get','api/index/getAdPerm').then(res => {
+				this.$request('get', 'api/ad/perm').then(res => {
 					uni.hideLoading()
 					if (res.code) {
 						this.ad_perm = res.data.ad_perm

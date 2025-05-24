@@ -2,7 +2,7 @@
 	<view style="padding: 30rpx;">
 		<view style="font-weight: bold;font-size: 30rpx;color: black;">{{info.title}}</view>
 		<view style="color: #A9ABB6;font-size: 24rpx;margin-top: 20rpx;">发布时间：{{info.create_time}}</view>
-		<view style="font-size: 24rpx;margin-top: 20rpx;">
+		<view style="font-size: 36rpx;margin-top: 20rpx;">
 			<mp-html :content="info.content" />
 		</view>
 	</view>
@@ -13,11 +13,13 @@
 		data() {
 			return {
 				id: 0,
+				type: '',
 				info: {}
 			};
 		},
 		onLoad(options) {
 			this.id = options.id
+			this.type = options.type ?? ''
 			this.getInfo()
 		},
 		methods: {
@@ -26,14 +28,25 @@
 					title: '加载中',
 					mask: true
 				})
-				this.$request('get', 'api/index/getNoticeDetail', {
-					id: this.id
-				}).then(res => {
-					uni.hideLoading()
-					if (res.code) {
-						this.info = res.data.info
-					} 
-				})
+				if (this.type) {
+					this.$request('get', 'api/notice/info', {
+						id: this.id
+					}).then(res => {
+						uni.hideLoading()
+						if (res.code) {
+							this.info = res.data
+						} 
+					})
+				} else {
+					this.$request('get', 'api/index/getNoticeDetail', {
+						id: this.id
+					}).then(res => {
+						uni.hideLoading()
+						if (res.code) {
+							this.info = res.data.info
+						} 
+					})
+				}
 			}
 		}
 	}

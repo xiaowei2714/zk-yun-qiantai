@@ -78,7 +78,13 @@
 								<view style="display: flex;justify-content: space-between;">
 									<view style="margin-top: 14rpx;font-weight: 400;font-size: 24rpx;color: #A9ABB6;">
 										{{item.create_time}}</view>
-									<view style="font-weight: 400;font-size: 24rpx;color: #3742C5;">余额 {{item.changed_money}} Y币</view>
+									<view style="font-weight: 400;font-size: 24rpx;color: #3742C5;">
+										<view v-if="item.type == 13 && item.change_type == 2">
+											冻结资产余额<br />
+											{{item.changed_money}} Y币
+										</view>
+										<view v-else>余额 {{item.changed_money}} Y币</view>
+									</view>
 								</view>
 							</view>
 						</view>

@@ -9,6 +9,7 @@
 			<view @click="maxMoney" style="font-weight: 400;font-size: 30rpx;color: #3742C5;margin-right: 28rpx;">最大
 			</view>
 		</view>
+
 		<view style="margin-top: 18rpx;font-weight: 400;font-size: 24rpx;color: #A9ABB6;">余额最大出售数量<span
 				style="color: #464D57;margin-left: 10rpx;">{{userMoney ? userMoney : '0.00'}}</span></view>
 		<view
@@ -18,6 +19,7 @@
 					placeholder="请输入出售价格(单价)" placeholder-style="font-weight: 400;font-size: 30rpx;color: #A9ABB6;" />
 			</view>
 		</view>
+
 		<view style="margin-top: 56rpx;display: flex;align-items: center;">
 			<view style="font-weight: 400;font-size: 24rpx;color: #464D57;">最小交易额<span
 					style="color: #F6465D;margin-left: 10rpx;">*</span></view>
@@ -28,7 +30,7 @@
 			<view
 				style="width: 318rpx;height: 80rpx;background: #F6F7F9;border-radius: 24rpx;display: flex;align-items: center;justify-content: space-between;">
 				<view style="margin-left: 28rpx;">
-					<input v-model="min_price" type="text" placeholder="最小2"
+					<input v-model="min_price" type="text" placeholder="最小0.01"
 						style="font-weight: 400;font-size: 30rpx;width: 200rpx;"
 						placeholder-style="font-weight: 400;font-size: 30rpx;color: #A9ABB6;" />
 				</view>
@@ -38,13 +40,14 @@
 			<view
 				style="width: 318rpx;height: 80rpx;background: #F6F7F9;border-radius: 24rpx;display: flex;align-items: center;justify-content: space-between;">
 				<view style="margin-left: 28rpx;">
-					<input v-model="max_price" type="text" placeholder="最大0.00"
+					<input v-model="max_price" type="text" placeholder=""
 						style="font-weight: 400;font-size: 30rpx;width: 200rpx;"
 						placeholder-style="font-weight: 400;font-size: 30rpx;color: #A9ABB6;" />
 				</view>
 				<view style="margin-right: 28rpx;">Y币</view>
 			</view>
 		</view>
+
 		<view style="font-weight: 400;font-size: 24rpx;color: #464D57;margin-top: 36rpx;">付款时限<span
 				style="color: #F6465D;margin-left: 10rpx;">*</span></view>
 		<view
@@ -55,7 +58,20 @@
 			</view>
 			<view style="font-weight: bold;font-size: 30rpx;margin-right: 28rpx;">分钟</view>
 		</view>
-		<view style="font-weight: bold;font-size: 30rpx;color: #464D57;margin-top: 68rpx;">支付方式<span
+
+		<view style="font-weight: 400;font-size: 24rpx;color: #464D57;margin-top: 36rpx;">
+			交易类型
+			<span style="color: #F6465D;margin-left: 10rpx;">*</span>
+		</view>
+		<radio-group v-model="type" class="uni-flex uni-row radio-group" @change="changeType">
+			<!-- <radio value="1" :label="1" :checked="true" color="#2EBD85"
+				style="margin-top: 16rpx;transform: scale(0.7); margin-right: 15px" class="radio">
+				买入
+			</radio> -->
+			<radio value="2" :label="2" :checked="true" color="#F6465D" style="transform: scale(0.7)" class="radio">卖出</radio>
+		</radio-group>
+
+		<view style="font-weight: bold;font-size: 30rpx;color: #464D57;margin-top: 38rpx;">支付方式<span
 				style="color: #F6465D;margin-left: 10rpx;">*</span></view>
 		<view style="margin-top: 16rpx;font-weight: 400;font-size: 24rpx;color: #A9ABB6;">您最多可以同时选择3种支付方式</view>
 		<view @click="showPayType = true"
@@ -66,36 +82,42 @@
 			</view>
 		</view>
 		<view style="margin-top: 38rpx;">
-			<view v-if="checkboxValue2.includes('zfb')" style="display: flex;align-items: center;justify-content: flex-start;">
-				<view style="width: 6rpx;height: 20rpx;background: #06B4FD;border-radius: 4rpx;margin-right: 10rpx;"></view>
+			<view v-if="checkboxValue2.includes('zfb')"
+				style="display: flex;align-items: center;justify-content: flex-start;">
+				<view style="width: 6rpx;height: 20rpx;background: #06B4FD;border-radius: 4rpx;margin-right: 10rpx;">
+				</view>
 				<view style="font-weight: 400;font-size: 24rpx;color: #A9ABB6;">支付宝</view>
 			</view>
-			<view v-if="checkboxValue2.includes('yhk')" style="display: flex;align-items: center;margin-top: 14rpx;justify-content: flex-start;">
-				<view style="width: 6rpx;height: 20rpx;background: #F3AF55;border-radius: 4rpx;margin-right: 10rpx;"></view>
+			<view v-if="checkboxValue2.includes('yhk')"
+				style="display: flex;align-items: center;margin-top: 14rpx;justify-content: flex-start;">
+				<view style="width: 6rpx;height: 20rpx;background: #F3AF55;border-radius: 4rpx;margin-right: 10rpx;">
+				</view>
 				<view style="font-weight: 400;font-size: 24rpx;color: #A9ABB6;">银行借记卡</view>
 			</view>
-			<view v-if="checkboxValue2.includes('wx')" style="display: flex;align-items: center;margin-top: 14rpx;justify-content: flex-start;">
-				<view style="width: 6rpx;height: 20rpx;background: #28C445;border-radius: 4rpx;margin-right: 10rpx;"></view>
+			<view v-if="checkboxValue2.includes('wx')"
+				style="display: flex;align-items: center;margin-top: 14rpx;justify-content: flex-start;">
+				<view style="width: 6rpx;height: 20rpx;background: #28C445;border-radius: 4rpx;margin-right: 10rpx;">
+				</view>
 				<view style="font-weight: 400;font-size: 24rpx;color: #A9ABB6;">微信</view>
 			</view>
-			<view v-if="checkboxValue2.includes('usdt')" style="display: flex;align-items: center;margin-top: 14rpx;justify-content: flex-start;">
-				<view style="width: 6rpx;height: 20rpx;background: black;border-radius: 4rpx;margin-right: 10rpx;"></view>
+			<view v-if="checkboxValue2.includes('usdt')"
+				style="display: flex;align-items: center;margin-top: 14rpx;justify-content: flex-start;">
+				<view style="width: 6rpx;height: 20rpx;background: black;border-radius: 4rpx;margin-right: 10rpx;">
+				</view>
 				<view style="font-weight: 400;font-size: 24rpx;color: #A9ABB6;">USDT</view>
 			</view>
 		</view>
-		<!-- <view style="margin-top: 38rpx;font-weight: bold;font-size: 30rpx;">交易提示</view> -->
+
 		<view style="margin-top: 38rpx;font-weight: bold;font-size: 24rpx;">【商家提示】</view>
 		<view style="padding: 24rpx;background: #F6F7F9;border-radius: 24rpx;margin-top: 16rpx;">
 			<u-textarea v-model="tips" style="background-color: #F6F7F9;font-weight: 500;font-size: 24rpx;"
 				placeholder="请输入" autoHeight border="none"
 				placeholder-style="font-weight: 500;font-size: 24rpx;color: #757B8C;"></u-textarea>
 		</view>
+
 		<view @click="submit"
 			style="margin-top: 56rpx;height: 80rpx;background: #3742C5;border-radius: 32rpx;font-weight: bold;font-size: 28rpx;color: #FFFFFF;text-align: center;line-height: 80rpx;">
 			确认发布</view>
-
-
-
 
 		<u-popup :show="showPayType" mode="center" :round="32">
 			<view style="width: 560rpx;background: white;border-radius: 32rpx;">
@@ -105,7 +127,8 @@
 				</view>
 				<view style="padding: 34rpx;">
 					<view style="margin-top: 38rpx;">
-						<u-checkbox-group v-model="checkboxValue1" iconPlacement="right" placement="column" @change="checkboxChange">
+						<u-checkbox-group v-model="checkboxValue1" iconPlacement="right" placement="column"
+							@change="checkboxChange">
 							<u-checkbox :customStyle="{marginBottom: '8px'}" v-for="(item, index) in checkboxList1"
 								:key="index" :label="item.name" :name="item.value">
 							</u-checkbox>
@@ -133,6 +156,7 @@
 				min_price: '',
 				max_price: '',
 				pay_time: '',
+				type: '2',
 				tips: '',
 				showPayType: false,
 				checkboxValue1: [],
@@ -171,18 +195,21 @@
 				if (!this.min_price) return uni.$u.toast('请输入最小交易额')
 				if (!this.max_price) return uni.$u.toast('请输入最大交易额')
 				if (!this.pay_time) return uni.$u.toast('请输入付款时限')
+				if (!this.type) return uni.$u.toast('请输入交易类型')
 				if (this.checkboxValue2.length == 0) return uni.$u.toast('请至少选择一种支付方式')
 				uni.showLoading({
 					title: '发布中',
 					mask: true
 				})
-				this.$request('post', 'api/index/addAd', {
+				
+				this.$request('post', 'api/ad/addData', {
 					num: this.saleMoney,
 					price: this.salePrice,
 					min_price: this.min_price,
 					max_price: this.max_price,
 					pay_time: this.pay_time,
 					pay_type: this.checkboxValue2,
+					type: this.type,
 					tips: this.tips
 				}).then(res => {
 					uni.hideLoading()
@@ -194,6 +221,7 @@
 						this.max_price = ''
 						this.pay_time = ''
 						this.checkboxValue2 = ''
+						this.type = 1
 						this.tips = ''
 						setTimeout(() => {
 							uni.navigateBack(1)
@@ -225,6 +253,9 @@
 						this.userMoney = res.data.user_money
 					}
 				})
+			},
+			changeType(value){
+				this.type = value.detail.value
 			}
 		}
 	}

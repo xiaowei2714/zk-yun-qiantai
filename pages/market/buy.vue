@@ -129,7 +129,7 @@
 					选择支付方式
 				</view>
 				<view style="padding: 34rpx;">
-					<view @click="chosePayTypeF('zfb')" v-if="info.pay_type.includes('zfb')" style="padding: 30rpx;background-color: white;border-radius: 32rpx;display: flex;align-items: center;">
+					<view @click="chosePayTypeF('zfb')" v-if="infoPayType.includes('zfb')" style="padding: 30rpx;background-color: white;border-radius: 32rpx;display: flex;align-items: center;">
 						<view style="display: flex;justify-content: space-between;align-items: center;width: 100%;">
 							<view style="display: flex;align-items: center;">
 								<view>
@@ -143,7 +143,7 @@
 						</view>
 						
 					</view>
-					<view @click="chosePayTypeF('wx')" v-if="info.pay_type.includes('wx')" style="padding: 30rpx;background-color: white;border-radius: 32rpx;display: flex;align-items: center;margin-top: 30rpx;">
+					<view @click="chosePayTypeF('wx')" v-if="infoPayType.includes('wx')" style="padding: 30rpx;background-color: white;border-radius: 32rpx;display: flex;align-items: center;margin-top: 30rpx;">
 						<view style="display: flex;justify-content: space-between;align-items: center;width: 100%;">
 							<view style="display: flex;align-items: center;">
 								<view>
@@ -157,7 +157,7 @@
 						</view>
 						
 					</view>
-					<view @click="chosePayTypeF('yhk')" v-if="info.pay_type.includes('yhk')" style="padding: 30rpx;background-color: white;border-radius: 32rpx;display: flex;align-items: center;margin-top: 30rpx;">
+					<view @click="chosePayTypeF('yhk')" v-if="infoPayType.includes('yhk')" style="padding: 30rpx;background-color: white;border-radius: 32rpx;display: flex;align-items: center;margin-top: 30rpx;">
 						<view style="display: flex;justify-content: space-between;align-items: center;width: 100%;">
 							<view style="display: flex;align-items: center;">
 								<view>
@@ -171,7 +171,7 @@
 						</view>
 						
 					</view>
-					<view @click="chosePayTypeF('usdt')" v-if="info.pay_type.includes('usdt')" style="padding: 30rpx;background-color: white;border-radius: 32rpx;display: flex;align-items: center;margin-top: 30rpx;">
+					<view @click="chosePayTypeF('usdt')" v-if="infoPayType.includes('usdt')" style="padding: 30rpx;background-color: white;border-radius: 32rpx;display: flex;align-items: center;margin-top: 30rpx;">
 						<view style="display: flex;justify-content: space-between;align-items: center;width: 100%;">
 							<view style="display: flex;align-items: center;">
 								<view>
@@ -198,13 +198,13 @@
 				sk_show: false,
 				id: 0,
 				info: {},
+				infoPayType: [],
 				chosePayType: '',
 				inputMoney: ''
 			};
 		},
 		onLoad(options) {
 			this.id = options.id
-			this.getDetail()
 		},
 		onShow() {
 			this.getDetail()
@@ -225,12 +225,13 @@
 					title: '加载中',
 					mask: true
 				})
-				this.$request('get', 'api/index/getAdDetail', {
+				this.$request('get', 'api/ad/info', {
 					id: this.id
 				}).then(res => {
 					uni.hideLoading()
 					if (res.code) {
-						this.info = res.data.info
+						this.info = res.data
+						this.infoPayType = this.info.pay_type
 						this.chosePayType = this.info.pay_type[0]
 					}
 				})
@@ -241,8 +242,8 @@
 					title: '订单创建中',
 					mask: true
 				})
-				this.$request('post', 'api/index/adBuy', {
-					inputMoney: this.inputMoney,
+				this.$request('post', 'api/ad/buy', {
+					price: this.inputMoney,
 					pay_type: this.chosePayType,
 					id: this.id
 				}).then(res => {
