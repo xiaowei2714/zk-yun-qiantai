@@ -10,7 +10,6 @@
 				text-align: center;line-height: 80rpx;">立即开通</view>
 		</view>
 		
-		
 		<u-popup :show="kt_show" mode="center" :round="32" :closeable="true" @close="kt_show = false">
 			<view style="width: 560rpx;background: white;border-radius: 32rpx;">
 				<view style="height: 78rpx;background: #E3E8FF;border-radius: 32rpx 32rpx 0rpx 0rpx;font-weight: bold;font-size: 30rpx;line-height: 78rpx;text-align: center;">
