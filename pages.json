@@ -107,7 +107,7 @@
 			"path" : "pages/my/recharge-detail",
 			"style" : 
 			{
-				"navigationBarTitleText" : "确定充值",
+				"navigationBarTitleText" : "充值详情",
 				"navigationBarBackgroundColor": "#ffffff",
 				"backgroundColor": "#F8F8F8" 
 			}
