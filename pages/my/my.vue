@@ -102,10 +102,6 @@
 					<view style="margin-top: 28rpx;font-weight: 400;font-size: 24rpx;color: #9C9EA8;">联系我们</view>
 				</view>
 			</view>
-			
-			
-			
-			
 		</view>
 		<nav-bar :nav-index="3"/>
 	</view>
