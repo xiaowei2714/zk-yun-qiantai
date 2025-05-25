@@ -22,7 +22,10 @@
 			<v-tabs v-model="activeTab" :lineScale="0.25" height="80rpx" activeColor="black" lineColor="#3742C5"
 				:scroll="false" :tabs="['全部', '未付款', '已付款', '申诉', '已完成', '已取消']" @change="changeTab"></v-tabs>
 		</view>
-		<view style="padding: 30rpx;">
+
+		<view style="padding: 30rpx;margin-bottom: 200rpx;">
+			
+			<!-- 列表 -->
 			<view v-for="(item, index) in list" :key="index" @click="detail(item.id, item.status)"
 				style="padding: 30rpx;box-shadow: 0rpx 6rpx 32rpx 2rpx rgba(0,0,0,0.08);border-radius: 32rpx;margin-top: 20rpx;">
 				<view style="display: flex;justify-content: space-between;align-items: center;">
@@ -104,10 +107,14 @@
 					</view>
 				</view>
 			</view>
-			<view
-				style="width: 100%;font-weight: 400;font-size: 26rpx;color: #A9ABB6;text-align: center;margin-top: 56rpx;">
-				点击或上拉加载更多</view>
+			
+			<!-- 加载更多 -->
+			<u-loadmore v-if="list.length != 0" :status="load_status" @loadmore="loadMoreData"
+				style="margin-top: 35rpx;"></u-loadmore>
+				
+			<view style="margin-bottom: 200rpx;"></view>
 		</view>
+		
 		<nav-bar :nav-index="1" />
 	</view>
 </template>
@@ -124,6 +131,8 @@
 				search: '',
 				list: [],
 				timer: null,
+				last_id: '',
+				load_status: 'loadmore',
 			};
 		},
 		onLoad() {
@@ -133,21 +142,41 @@
 			this.getList()
 		},
 		methods: {
-			getList() {
+			getList(loadMore = false) {
 				uni.showLoading({
 					title: '加载中',
 					mask: true
 				})
 				this.$request('get', 'api/ad/adOrderList', {
 					status: this.activeTab,
-					search: this.search
+					search: this.search,
+					last_id: this.last_id
 				}).then(res => {
 					uni.hideLoading()
 					if (res.code) {
-						this.list = res.data
+						if (res.data.list.length == 0) {
+							this.last_id = ''
+							this.load_status = 'nomore'
+							return
+						}
+						
+						this.last_id = res.data.last_id
+						this.load_status = res.data.last_id != '' ? 'loadmore' : 'nomore'
+						if (!loadMore) {
+							this.list = res.data.list
+						} else {
+							for (const tmp of res.data.list) {
+								this.list.push(tmp)
+							}
+						}
+						
 						this.startCountdown()
 					}
 				})
+			},
+			loadMoreData() {
+				this.load_status = 'loading';
+				this.getList(true)
 			},
 			detail(id, status) {
 				if (status == 1) {
@@ -170,6 +199,8 @@
 			},
 			changeTab(e) {
 				this.activeTab = e
+				this.last_id = ''
+				this.load_status = 'loadmore'
 				this.getList()
 			},
 			padZero(num) {

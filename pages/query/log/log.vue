@@ -7,7 +7,7 @@
 				:style="{fontWeight: type == 2 ? 'bold' : '400', color: type == 2 ? '#000000' : '#757B8C'}">电费记录</view>
 		</view>
 		<view
-			style="margin-top: 32rpx;box-shadow: 0rpx 6rpx 32rpx 2rpx rgba(0,0,0,0.08);border-radius: 32rpx;padding: 30rpx;">
+			style="margin-top: 32rpx;margin-bottom: 200rpx;box-shadow: 0rpx 6rpx 32rpx 2rpx rgba(0,0,0,0.08);border-radius: 32rpx;padding: 30rpx;">
 			<view v-for="(item, index) in cur_list" :key="index" class="row_f">
 				<view class="row_f_a">
 					{{ item.account }} {{ item.type }}
@@ -20,6 +20,9 @@
 					</view>
 				</view>
 			</view>
+
+			<u-loadmore v-if="type == 1" :status="phone_load_status" @loadmore="loadMoreData"></u-loadmore>
+			<u-loadmore v-else :status="ele_load_status" @loadmore="loadMoreData"></u-loadmore>
 		</view>
 
 		<nav-bar :nav-index="2" />
@@ -40,6 +43,10 @@
 				phone_list: [],
 				ele_find: false,
 				ele_list: [],
+				phone_load_status: 'loadmore',
+				ele_load_status: 'loadmore',
+				phone_last_id: '',
+				ele_last_id: ''
 			};
 		},
 		onLoad() {
@@ -48,43 +55,79 @@
 		methods: {
 			changeType(e) {
 				this.type = e
-				this.getList()
-			},
-			getList() {
-				uni.showLoading({
-					title: '加载中',
-					mask: true
-				})
 				if (this.type == 1) {
 					if (this.phone_find) {
 						this.cur_list = this.phone_list
-						uni.hideLoading()
-						return
+					} else {
+						this.getList()
 					}
 				} else {
 					if (this.ele_find) {
 						this.cur_list = this.ele_list
-						uni.hideLoading()
-						return
+					} else {
+						this.getList()
 					}
 				}
+			},
+			getList(loadMore = false) {
+				uni.showLoading({
+					title: '加载中',
+					mask: true
+				})
 
 				this.$request('get', 'api/ConsumeQuery/history', {
-					type: this.type
+					type: this.type,
+					last_id: this.type == 1 ? this.phone_last_id : this.ele_last_id
 				}).then(res => {
 					uni.hideLoading()
 					if (res.code) {
 						if (this.type == 1) {
+							if (res.data.list.length == 0) {
+								this.phone_load_status = 'nomore'
+								return
+							}
+							
 							this.phone_find = true
-							this.phone_list = res.data.list
+							this.phone_last_id = res.data.last_id
+							this.phone_load_status = res.data.last_id != '' ? 'loadmore' : 'nomore'
+							
+							if (!loadMore) {
+								this.phone_list = res.data.list
+							} else {
+								for (const tmp of res.data.list) {
+									this.phone_list.push(tmp)
+								}
+							}
+							
+							this.cur_list = this.phone_list
+							
 						} else {
+							if (res.data.list.length == 0) {
+								this.ele_load_status = 'nomore'
+								return
+							}
+							
 							this.ele_find = true
-							this.ele_list = res.data.list
+							this.ele_last_id = res.data.last_id
+							this.ele_load_status = res.data.last_id != '' ? 'loadmore' : 'nomore'
+							
+							if (!loadMore) {
+								this.ele_list = res.data.list
+							} else {
+								for (const tmp of res.data.list) {
+									this.ele_list.push(tmp)
+								}
+							}
+							
+							this.cur_list = this.ele_list
 						}
 
-						this.cur_list = res.data.list
 					}
 				})
+			},
+			loadMoreData() {
+				this.load_status = 'loading';
+				this.getList(true)
 			},
 			goHistory(value) {
 				if (this.type == 1) {

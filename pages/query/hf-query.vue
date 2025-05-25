@@ -17,7 +17,6 @@
 			<view style="padding: 30rpx;">
 				<view @click="confirmSubmit" class="find_content">确认查询</view>
 			</view>
-
 		</view>
 		<view v-else
 			style="box-shadow: 0rpx 6rpx 32rpx 2rpx rgba(0,0,0,0.08);border-radius: 32rpx;position: relative;padding: 40rpx;">
@@ -36,13 +35,14 @@
 			<view @click="pldr_show = true" style="margin-top: 40rpx;background: #3742C5;border-radius: 32rpx;font-weight: bold;font-size: 28rpx;color: #FFFFFF;text-align: center;height: 80rpx;
 				line-height: 80rpx;">点击一键导入</view>
 		</view>
+		
 		<view v-if="type == 1 && cur_number !== ''" class="res">
 			<view class="res_phone_line">
 				<view class="res_phone">{{ cur_number }}</view>
 				<view class="res_isp">{{ cur_isp }}</view>
 			</view>
 			<view style="width: 100%;height: 1rpx;background-color: #F2F2F2;"></view>
-			<view style="padding: 30rpx;">
+			<view style="padding: 30rpx;margin-bottom: 200rpx;">
 				<view class="res_balance">
 					<span v-if="account != ''">最新记录</span>
 					<span v-else>当前</span>
@@ -53,6 +53,8 @@
 					<view style="font-weight: 400;font-size: 28rpx;color: #757B8C;">{{ item.time }}</view>
 					<view style="font-weight: bold;font-size: 28rpx;">￥ {{ item.balance }}</view>
 				</view>
+
+				<u-loadmore v-if="account" :status="load_status" @loadmore="loadMoreData"></u-loadmore>
 			</view>
 		</view>
 
@@ -125,15 +127,16 @@
 				cur_list: [],
 				batch_data: [],
 				go_batch_confirm: false,
-				account: ''
+				account: '',
+				load_status: 'loadmore',
 			};
 		},
 		onLoad(options) {
 			this.getQueryConfig()
-			
+
 			this.account = options.account
 			if (options.account) {
-				this.getHistory(options.account)
+				this.getHistory()
 			}
 		},
 		methods: {
@@ -229,7 +232,7 @@
 					return uni.$u.toast('正在查询中...')
 				}
 				this.can_click = false
-				
+
 				const price = this.query_price * this.numbers_txt.length
 				const obj = this
 				uni.showModal({
@@ -241,7 +244,7 @@
 					success: function(res) {
 						if (res.confirm) {
 							if (obj.numbers_txt.length == 0) return uni.$u.toast('请正确输入充值号码')
-							
+
 							obj.$request('post', 'api/ConsumeQuery/batchQueryPhone', {
 								batch_data: obj.numbers_txt,
 							}).then(res => {
@@ -261,22 +264,46 @@
 					}
 				});
 			},
-			getHistory(value) {
+			getHistory(loadMore = false) {
 				this.$request('get', 'api/ConsumeQuery/accountHistory', {
-					number: value,
-					type: 1
+					number: this.account,
+					type: 1,
+					last_id: this.last_id
 				}).then(res => {
 					uni.hideLoading()
 					if (res.code) {
+						if (res.data.list.length == 0) {
+							this.load_status = 'nomore'
+							return
+						}
+
 						this.cur_number = res.data.number
 						this.cur_balance = res.data.balance
 						this.cur_isp = res.data.isp
-						this.cur_list = res.data.list
+
+						this.last_id = res.data.last_id
+						this.load_status = res.data.last_id != '' ? 'loadmore' : 'nomore'
+
+						if (!loadMore) {
+							this.cur_list = res.data.list
+						} else {
+							for (const tmp of res.data.list) {
+								this.cur_list.push(tmp)
+							}
+						}
+
 					} else {
 						uni.$u.toast(res.msg)
 					}
 				})
-			}
+			},
+			loadMoreData() {
+				if (!this.account) {
+					return
+				}
+				this.load_status = 'loading';
+				this.getHistory(true)
+			},
 		}
 	}
 </script>
@@ -286,6 +313,7 @@
 		margin-top: 40rpx;
 		box-shadow: 0rpx 6rpx 32rpx 2rpx rgba(0, 0, 0, 0.08);
 		border-radius: 32rpx;
+		margin-bottom: 200rpx;
 	}
 
 	.res_phone_line {

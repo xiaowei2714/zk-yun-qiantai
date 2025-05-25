@@ -7,7 +7,7 @@
 					<image src="/static/order-sous.png" style="width: 30rpx;height: 30rpx;" mode=""></image>
 				</view>
 				<view style="margin-left: 15rpx;width: 100%;">
-					<input @keyup.enter="getConsumeRechargeList" v-model="search" type="text" style="width: 100%;"
+					<input @keyup.enter="getList" v-model="search" type="text" style="width: 100%;"
 						placeholder="请输入卡号/订单号" placeholder-style="font-weight: 500;font-size: 26rpx;color: #757B8C;" />
 				</view>
 			</view>
@@ -18,94 +18,98 @@
 			</view>
 		</view>
 		<view style="padding: 30rpx;padding-bottom: 30rpx;">
-			<scroll-view scroll-y="true" style="height: 100%;" @scrolltolower="loadMoreData" lower-threshold="10">
-				<view v-for="(item, index) in list" :key="index" style="padding-bottom: 30rpx;">
-					<view style="height: 442rpx;background: #FFFFFF;border-radius: 32rpx;position: relative;">
-						<view v-if="item.status == 1" class="status_show">待充值</view>
-						<view v-else-if="item.status == 2" class="status_show status_recharging">充值中</view>
-						<view v-else-if="item.status == 3" class="status_show status_success">已完成</view>
-						<view v-else-if="item.status == 4" class="status_show status_fail">已失败</view>
-						<view style="padding-top: 24rpx;margin-left: 34rpx;">
-							<view style="display: flex;">
-								<view style="font-weight: bold;font-size: 28rpx;">订单：{{ item.sn }}</view>
-								<view v-if="item.type == 1 || item.type == 2" class="type_show">
-									{{ nameShow(item.type) }}
+			<view v-for="(item, index) in list" :key="index" style="padding-bottom: 30rpx;">
+				<view style="height: 442rpx;background: #FFFFFF;border-radius: 32rpx;position: relative;">
+					<view v-if="item.status == 1" class="status_show">待充值</view>
+					<view v-else-if="item.status == 2" class="status_show status_recharging">充值中</view>
+					<view v-else-if="item.status == 3" class="status_show status_success">已完成</view>
+					<view v-else-if="item.status == 4" class="status_show status_fail">已失败</view>
+					<view style="padding-top: 24rpx;margin-left: 34rpx;">
+						<view style="display: flex;">
+							<view style="font-weight: bold;font-size: 28rpx;">订单：{{ item.sn }}</view>
+							<view v-if="item.type == 1 || item.type == 2" class="type_show">
+								{{ nameShow(item.type) }}
+							</view>
+							<view v-if="item.type == 3" class="type_show type_quickly_show">
+								{{ nameShow(item.type) }}
+							</view>
+							<view v-if="item.type == 4" class="type_show type_card_show">{{ nameShow(item.type) }}
+							</view>
+						</view>
+						<view style="margin-top: 10rpx;font-weight: 500;font-size: 24rpx;color: #A9ABB6;">
+							{{ item.time }}
+						</view>
+					</view>
+					<view style="width: 100%;opacity: 0.1;margin-top: 20rpx;height: 1rpx;background-color: #707070;">
+					</view>
+					<view style="margin-left: 34rpx;margin-top: 20rpx;margin-right: 32rpx;">
+						<view style="display: flex;justify-content: space-between;">
+							<view style="display: flex;align-items: center;">
+								<view>
+									<image v-if="item.type == 1 || item.type == 3" src="/static/order-huaf.png"
+										style="width: 72rpx;height: 72rpx;" mode="">
+									</image>
+									<image v-if="item.type == 2" src="/static/qb-dfmx.png"
+										style="width: 72rpx;height: 72rpx;" mode="">
+									</image>
+									<image v-if="item.type == 4" src="/static/lpk.png"
+										style="width: 72rpx;height: 72rpx;" mode="">
+									</image>
 								</view>
-								<view v-if="item.type == 3" class="type_show type_quickly_show">
-									{{ nameShow(item.type) }}</view>
-								<view v-if="item.type == 4" class="type_show type_card_show">{{ nameShow(item.type) }}
+								<view class="account_show">
+									{{ item.account }}
+									<span v-if="item.account_name != ''"
+										class="account_type_show">({{ item.account_name }})</span>
 								</view>
 							</view>
-							<view style="margin-top: 10rpx;font-weight: 500;font-size: 24rpx;color: #A9ABB6;">
-								{{ item.time }}
+							<view class="pay_price_show">
+								￥{{ item.pay_price }}
+							</view>
+						</view>
+						<view style="margin-top: 26rpx;display: flex;justify-content: space-between;">
+							<view style="text-align: center;">
+								<view style="font-weight: bold;font-size: 24rpx;">{{ item.price }}元</view>
+								<view style="margin-top: 5rpx;font-weight: 400;font-size: 24rpx;color: #A9ABB6;">充值
+								</view>
+							</view>
+							<view style="text-align: center;">
+								<view style="font-weight: bold;font-size: 24rpx;">{{ item.balances_price }}元</view>
+								<view style="margin-top: 5rpx;font-weight: 400;font-size: 24rpx;color: #A9ABB6;">已充
+								</view>
+							</view>
+							<view style="text-align: center;">
+								<view style="font-weight: bold;font-size: 24rpx;">{{ item.up_price }}元</view>
+								<view style="margin-top: 5rpx;font-weight: 400;font-size: 24rpx;color: #A9ABB6;">初始
+								</view>
+							</view>
+							<view style="text-align: center;">
+								<view style="font-weight: bold;font-size: 24rpx;">{{ item.down_price }}元</view>
+								<view style="margin-top: 5rpx;font-weight: 400;font-size: 24rpx;color: #A9ABB6;">当前
+								</view>
 							</view>
 						</view>
 						<view
-							style="width: 100%;opacity: 0.1;margin-top: 20rpx;height: 1rpx;background-color: #707070;">
+							style="width: 100%;opacity: 0.1;margin-top: 22rpx;height: 1rpx;background-color: #707070;">
 						</view>
-						<view style="margin-left: 34rpx;margin-top: 20rpx;margin-right: 32rpx;">
-							<view style="display: flex;justify-content: space-between;">
-								<view style="display: flex;align-items: center;">
-									<view>
-										<image v-if="item.type == 1 || item.type == 3" src="/static/order-huaf.png" style="width: 72rpx;height: 72rpx;" mode="">
-										</image>
-										<image v-if="item.type == 2" src="/static/qb-dfmx.png" style="width: 72rpx;height: 72rpx;" mode="">
-										</image>
-										<image v-if="item.type == 4" src="/static/lpk.png" style="width: 72rpx;height: 72rpx;" mode="">
-										</image>
-									</view>
-									<view class="account_show">
-										{{ item.account }}
-										<span v-if="item.account_name != ''"
-											class="account_type_show">({{ item.account_name }})</span>
-									</view>
-								</view>
-								<view class="pay_price_show">
-									￥{{ item.pay_price }}
-								</view>
+						<view
+							style="display: flex;justify-content: space-between;align-items: center;margin-top: 18rpx;">
+							<view @click="detail(item.id)" style="font-weight: 400;font-size: 28rpx;color: #3742C5;">更多
 							</view>
-							<view style="margin-top: 26rpx;display: flex;justify-content: space-between;">
-								<view style="text-align: center;">
-									<view style="font-weight: bold;font-size: 24rpx;">{{ item.price }}元</view>
-									<view style="margin-top: 5rpx;font-weight: 400;font-size: 24rpx;color: #A9ABB6;">充值
-									</view>
+							<view style="display: flex;">
+								<view v-if="item.status == 1" @click="cancelOrder(item.id)" class="cancel_order">
+									取消订单
 								</view>
-								<view style="text-align: center;">
-									<view style="font-weight: bold;font-size: 24rpx;">{{ item.balances_price }}元</view>
-									<view style="margin-top: 5rpx;font-weight: 400;font-size: 24rpx;color: #A9ABB6;">已充
-									</view>
+								<view v-if="not_card && item.status == 3" @click="genBalance(item.id)"
+									class="gen_balance">更新余额
 								</view>
-								<view style="text-align: center;">
-									<view style="font-weight: bold;font-size: 24rpx;">{{ item.up_price }}元</view>
-									<view style="margin-top: 5rpx;font-weight: 400;font-size: 24rpx;color: #A9ABB6;">初始
-									</view>
-								</view>
-								<view style="text-align: center;">
-									<view style="font-weight: bold;font-size: 24rpx;">{{ item.down_price }}元</view>
-									<view style="margin-top: 5rpx;font-weight: 400;font-size: 24rpx;color: #A9ABB6;">当前
-									</view>
-								</view>
-							</view>
-							<view
-								style="width: 100%;opacity: 0.1;margin-top: 22rpx;height: 1rpx;background-color: #707070;">
-							</view>
-							<view
-								style="display: flex;justify-content: space-between;align-items: center;margin-top: 18rpx;">
-								<view @click="detail(item.id)" style="font-weight: 400;font-size: 28rpx;color: #3742C5;">更多</view>
-								<view style="display: flex;">
-									<view v-if="item.status == 1" @click="cancelOrder(item.id)" class="cancel_order">
-										取消订单
-									</view>
-									<view v-if="not_card && item.status == 3" @click="genBalance(item.id)"
-										class="gen_balance">更新余额
-									</view>
-									<view @click="detail(item.id)" class="go_detail">查看详情</view>
-								</view>
+								<view @click="detail(item.id)" class="go_detail">查看详情</view>
 							</view>
 						</view>
 					</view>
 				</view>
-			</scroll-view>
+			</view>
+
+			<u-loadmore :status="load_status" @loadmore="loadMoreData"></u-loadmore>
 		</view>
 	</view>
 </template>
@@ -120,7 +124,9 @@
 				search: '',
 				query_p: '',
 				query_e: '',
-				not_card: true
+				not_card: true,
+				last_id: '',
+				load_status: 'loadmore',
 			};
 		},
 		onLoad(options) {
@@ -154,10 +160,10 @@
 			this.type = options.type
 
 			// 列表
-			this.getConsumeRechargeList()
+			this.getList()
 		},
 		methods: {
-			getConsumeRechargeList() {
+			getList(loadMore = false) {
 				uni.showLoading({
 					title: '加载中',
 					mask: true
@@ -165,15 +171,34 @@
 				this.$request('get', 'api/consumeRecharge/list', {
 					type: this.type,
 					status: this.activeTab,
-					search: this.search
+					search: this.search,
+					last_id: this.last_id
 				}).then(res => {
 					uni.hideLoading()
 					if (res.code) {
-						this.list = res.data.list
+						if (res.data.list.length == 0) {
+							this.load_status = 'nomore'
+							return
+						}
+
 						this.query_p = res.data.query_p
 						this.query_e = res.data.query_e
+						this.last_id = res.data.last_id
+						this.load_status = res.data.last_id != '' ? 'loadmore' : 'nomore'
+
+						if (!loadMore) {
+							this.list = res.data.list
+						} else {
+							for (const tmp of res.data.list) {
+								this.list.push(tmp)
+							}
+						}
 					}
 				})
+			},
+			loadMoreData() {
+				this.load_status = 'loading';
+				this.getList(true)
 			},
 			nameShow(value) {
 				switch (value) {
@@ -193,9 +218,6 @@
 						return ''
 				}
 			},
-			loadMoreData() {
-				console.log(1111)
-			},
 			detail(id) {
 				uni.navigateTo({
 					url: '/pages/order/detail?id=' + id
@@ -203,7 +225,7 @@
 			},
 			changeTab(e) {
 				this.activeTab = e
-				this.getConsumeRechargeList()
+				this.getList()
 			},
 			cancelOrder(id) {
 				const obj = this
@@ -224,10 +246,10 @@
 							}).then(res => {
 								uni.hideLoading()
 								if (res.code) {
-									obj.getConsumeRechargeList()
+									obj.getList()
 									uni.$u.toast(res.msg)
 								} else {
-									obj.getConsumeRechargeList()
+									obj.getList()
 									uni.$u.toast(res.msg)
 								}
 							})
@@ -268,7 +290,7 @@
 							}).then(res => {
 								uni.hideLoading()
 								if (res.code) {
-									obj.getConsumeRechargeList()
+									obj.getList()
 									uni.$u.toast(res.msg)
 								} else {
 									uni.$u.toast(res.msg)
