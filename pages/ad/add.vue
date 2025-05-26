@@ -30,7 +30,7 @@
 			<view
 				style="width: 318rpx;height: 80rpx;background: #F6F7F9;border-radius: 24rpx;display: flex;align-items: center;justify-content: space-between;">
 				<view style="margin-left: 28rpx;">
-					<input v-model="min_price" type="text" placeholder="最小0.01"
+					<input v-model="min_price" type="text" placeholder="最小0.001"
 						style="font-weight: 400;font-size: 30rpx;width: 200rpx;"
 						placeholder-style="font-weight: 400;font-size: 30rpx;color: #A9ABB6;" />
 				</view>

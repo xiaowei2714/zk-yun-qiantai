@@ -45,7 +45,7 @@
 			</view>
 			<view style="margin-top: 36rpx;display: flex;justify-content: space-between;align-items: center;">
 				<view style="font-weight: 400;font-size: 28rpx;color: #A9ABB6;margin-left: 10rpx;">您收到</view>
-				<view style="font-weight: bold;font-size: 28rpx;color: #464D57;margin-right: 10rpx;">{{(inputMoney / info.price).toFixed(2)}} Y币</view>
+				<view style="font-weight: bold;font-size: 28rpx;color: #464D57;margin-right: 10rpx;">{{(inputMoney / info.price).toFixed(3)}} Y币</view>
 			</view>
 		</view>
 		<view style="margin-top: 30rpx;padding: 30rpx;box-shadow: 0rpx 6rpx 32rpx 2rpx rgba(0,0,0,0.08);border-radius: 32rpx;">

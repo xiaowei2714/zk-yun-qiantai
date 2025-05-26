@@ -67,7 +67,7 @@
 					<span v-if="type == 1"
 						style="margin-left: 14rpx;font-weight: bold;font-size: 40rpx;">{{activeMeal.discountedPrice}}</span>
 					<span v-if="type == 2"
-						style="margin-left: 14rpx;font-weight: bold;font-size: 40rpx;">{{(activeMeal.discountedPrice * numbers.length).toFixed(2)}}</span>
+						style="margin-left: 14rpx;font-weight: bold;font-size: 40rpx;">{{(activeMeal.discountedPrice * numbers.length).toFixed(3)}}</span>
 				</view>
 				<view>
 					<image src="/static/index-huaf-bianj.png" style="width: 33rpx;height: 33rpx;" mode=""></image>
@@ -81,7 +81,7 @@
 				</view>
 				<view v-if="type == 2" style="font-weight: bold;font-size: 28rpx;color: #000000;">
 					{{activeMeal.discount}}折
-					优惠{{(activeMeal.price2 * numbers.length).toFixed(2)}}Y币
+					优惠{{(activeMeal.price2 * numbers.length).toFixed(3)}}Y币
 				</view>
 			</view>
 			<view style="margin-top: 36rpx;display: flex;justify-content: space-between;">
@@ -94,7 +94,7 @@
 					{{activeMeal.discountedPrice}} Y币
 				</view>
 				<view v-if="type == 2" style="font-weight: bold;font-size: 36rpx;color: #EB8E26;">
-					{{(activeMeal.discountedPrice * numbers.length).toFixed(2)}} Y币
+					{{(activeMeal.discountedPrice * numbers.length).toFixed(3)}} Y币
 				</view>
 			</view>
 			<view @click="confirmSubmit" style="margin-top: 60rpx;height: 80rpx;background: #3742C5;border-radius: 32rpx;font-weight: bold;font-size: 28rpx;color: #FFFFFF;

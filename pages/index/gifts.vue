@@ -88,8 +88,8 @@
 					tmp = this.discount / 10
 				}
 
-				this.pay_price = (this.buy_price * tmp).toFixed(2)
-				this.discount_price = (this.buy_price - this.pay_price).toFixed(2)
+				this.pay_price = (this.buy_price * tmp).toFixed(3)
+				this.discount_price = (this.buy_price - this.pay_price).toFixed(3)
 			},
 			confirmSubmit() {
 				if (this.can_click === false) {

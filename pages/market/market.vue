@@ -80,7 +80,7 @@
 					<view>
 						<view style="display: flex;">
 							<view style="font-weight: 400;font-size: 24rpx;color: #A9ABB6;">数量</view>
-							<view style="margin-left: 26rpx;font-weight: bold;font-size: 24rpx;">{{item.num.toFixed(2)}}
+							<view style="margin-left: 26rpx;font-weight: bold;font-size: 24rpx;">{{item.num}}
 								Y币
 							</view>
 						</view>

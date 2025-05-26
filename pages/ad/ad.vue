@@ -104,7 +104,7 @@
 							<view style="display: flex;margin-top: 15rpx;">
 								<view style="font-weight: 400;font-size: 24rpx;color: #A9ABB6;">可用</view>
 								<view style="margin-left: 26rpx;font-weight: bold;font-size: 24rpx;">
-									{{item.num.toFixed(2)}}
+									{{item.num}}
 									Y币</view>
 							</view>
 						</view>
