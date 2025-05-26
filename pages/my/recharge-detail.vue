@@ -2,19 +2,21 @@
 	<view style="width: 100%;">
 		<view style="display: flex;justify-content: center;margin-top: 80rpx;">
 			<view style="width: 276rpx;height: 276rpx;border: 2rpx solid #3742C5;padding: 6rpx;">
-				<view style="width: 100%;height: 100%;background-color: bisque;"></view>
+				<view style="width: 100%;height: 100%;background-color: bisque;">
+					<img :src="config.img" alt="" style="width: 276rpx;height: 276rpx;" >
+				</view>
 			</view>
 		</view>
 		<view style="padding: 30rpx;">
 			<view style="font-weight: bold;font-size: 32rpx;">网络</view>
 			<view style="padding: 20rpx;background: #F6F7F9;border-radius: 32rpx;font-weight: 400;font-size: 32rpx;color: #757B8C;margin-top: 18rpx;">
-				<view style="margin-left: 12rpx;">Tron (TRC20)</view>
+				<view style="margin-left: 12rpx;">{{ config.network }}</view>
 			</view>
 			<view style="font-weight: bold;font-size: 32rpx;margin-top: 38rpx;">充值地址</view>
 			<view style="padding: 20rpx;background: #F6F7F9;border-radius: 32rpx;font-weight: 400;font-size: 32rpx;color: #757B8C;margin-top: 18rpx;
 				display: flex;justify-content: space-between;align-items: center;">
-				<view style="margin-left: 12rpx;">TDFSjksdf35rYSM+hdsk20HLsje</view>
-				<view>
+				<view style="margin-left: 12rpx;">{{ config.address }}</view>
+				<view @click="copy" >
 					<image src="/static/czxqfz.png" style="width: 26rpx;height: 26rpx;" mode=""></image>
 				</view>
 			</view>
@@ -43,12 +45,14 @@
 		data() {
 			return {
 				order_id: '',
-				info: {}
+				info: {},
+				config: {}
 			};
 		},
 		onLoad(options) {
 			this.order_id = options.id
 			this.getDetail()
+			this.getConfig()
 		},
 		methods: {
 			getDetail() {
@@ -67,7 +71,37 @@
 						uni.$u.toast(res.msg)
 					}
 				})
-			}
+			},
+			getConfig() {
+				this.$request('get', 'api/recharge/getConfig').then(res => {
+					uni.hideLoading()
+					if (res.code) {
+						this.config = res.data
+					} else {
+						uni.$u.toast(res.msg)
+					}
+				})
+			},
+			copy() {
+				// #ifdef H5
+				this.$copyText(this.config.address).then(
+					res => {
+						uni.$u.toast('复制成功')
+					}
+				)
+				// #endif
+				// #ifdef APP-PLUS
+				uni.setClipboardData({
+					data: this.config.address,
+					success: () => {
+						uni.$u.toast('复制成功')
+					},
+					fail: () => {
+						uni.$u.toast('复制失败')
+					}
+				});
+				// #endif
+			},
 		}
 	}
 </script>
