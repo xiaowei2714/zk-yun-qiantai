@@ -35,9 +35,7 @@
 				<view style="display: flex;justify-content: space-between;">
 					<view style="font-weight: bold;font-size: 30rpx;">
 						<view v-if="item.status == 1">充值待付款</view>
-						<view v-else-if="item.status == 2">充值已付款</view>
-						<view v-else-if="item.status == 3">充值已到账</view>
-						<view v-else-if="item.status == 4">充值失败</view>
+						<view v-else-if="item.status == 2">充值已到账</view>
 					</view>
 					<view style="font-weight: bold;font-size: 30rpx;">{{ item.money }} USDT</view>
 				</view>
