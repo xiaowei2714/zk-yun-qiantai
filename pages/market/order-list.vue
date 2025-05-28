@@ -201,6 +201,7 @@
 				this.activeTab = e
 				this.last_id = ''
 				this.load_status = 'loadmore'
+				this.list = []
 				this.getList()
 			},
 			padZero(num) {

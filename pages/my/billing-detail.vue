@@ -120,7 +120,11 @@
 				load_status: 'loadmore',
 			};
 		},
-		onLoad() {
+		onLoad(options) {
+			if (options.type) {
+				this.activeTab = options.type
+				this.activeTab2 = 3
+			}
 			this.dateStr = this.timestampToDate(this.date)
 			this.getList()
 		},

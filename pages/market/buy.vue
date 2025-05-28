@@ -94,28 +94,28 @@
 				</view>
 				<view style="margin-left: 5rpx;font-weight: 500;font-size: 24rpx;color: #A9ABB6;">认证广告方</view>
 				<view style="width: 1rpx;height: 20rpx;background-color: #E0E1E5;margin-left: 20rpx;margin-right: 20rpx;"></view>
-				<view style="font-weight: 500;font-size: 24rpx;color: #A9ABB6;">保证金15000 Y币</view>
+				<view style="font-weight: 500;font-size: 24rpx;color: #A9ABB6;">保证金{{ info.num }} Y币</view>
 				<view style="margin-left: 16rpx;margin-top: -5rpx;">
 					<image src="/static/jy-gt.png" style="width: 19rpx;height: 19rpx;" mode=""></image>
 				</view>
 			</view>
 		</view>
-		<view style="margin-top: 50rpx;">
+		<view style="margin-top: 50rpx;" v-if="thirtyCompleteData.cou">
 			<view style="display: flex;justify-content: space-between;">
 				<view style="font-weight: 400;font-size: 28rpx;color: #757B8C;">30日成单数</view>
-				<view style="font-weight: bold;font-size: 28rpx;">624</view>
+				<view style="font-weight: bold;font-size: 28rpx;">{{ thirtyCompleteData.cou }}</view>
 			</view>
 			<view style="display: flex;justify-content: space-between;margin-top: 35rpx;">
 				<view style="font-weight: 400;font-size: 28rpx;color: #757B8C;">30日成单率</view>
-				<view style="font-weight: bold;font-size: 28rpx;">99.60%</view>
+				<view style="font-weight: bold;font-size: 28rpx;">{{ thirtyCompleteData.rate }}%</view>
 			</view>
 			<view style="display: flex;justify-content: space-between;margin-top: 35rpx;">
 				<view style="font-weight: 400;font-size: 28rpx;color: #757B8C;">30日平均放行时间</view>
-				<view style="font-weight: bold;font-size: 28rpx;">1.40 分钟</view>
+				<view style="font-weight: bold;font-size: 28rpx;">{{ thirtyCompleteData.complete_time }} 分钟</view>
 			</view>
 			<view style="display: flex;justify-content: space-between;margin-top: 35rpx;">
 				<view style="font-weight: 400;font-size: 28rpx;color: #757B8C;">30日平均付款</view>
-				<view style="font-weight: bold;font-size: 28rpx;">3.90 分钟</view>
+				<view style="font-weight: bold;font-size: 28rpx;">{{ thirtyCompleteData.pay_time }} 分钟</view>
 			</view>
 		</view>
 		<view style="margin-top: 118rpx;display: flex;justify-content: center;width: 100%;">
@@ -200,7 +200,8 @@
 				info: {},
 				infoPayType: [],
 				chosePayType: '',
-				inputMoney: ''
+				inputMoney: '',
+				thirtyCompleteData: {}
 			};
 		},
 		onLoad(options) {
@@ -208,6 +209,7 @@
 		},
 		onShow() {
 			this.getDetail()
+			this.getThirtyComplete()
 		},
 		methods: {
 			allMoney() {
@@ -233,6 +235,15 @@
 						this.info = res.data
 						this.infoPayType = this.info.pay_type
 						this.chosePayType = this.info.pay_type[0]
+					}
+				})
+			},
+			getThirtyComplete() {
+				this.$request('get', 'api/ad/thirtyCompleteData', {
+					id: this.id
+				}).then(res => {
+					if (res.code) {
+						this.thirtyCompleteData = res.data
 					}
 				})
 			},

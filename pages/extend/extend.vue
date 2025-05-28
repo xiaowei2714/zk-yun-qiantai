@@ -42,7 +42,7 @@
 						<view style="font-weight: 800;font-size: 32rpx;color: #3742C5;margin-top: 14rpx;">Y币 {{total_award_price ? total_award_price : '0.00'}}</view>
 					</view>
 				</view>
-				<view @click="toPages('/pages/my/billing-detail')" style="height: 80rpx;margin-top: 44rpx;border-radius: 32rpx;border: 2rpx solid #3742C5;display: flex;justify-content: center;align-items: center;">
+				<view @click="toPages('/pages/my/billing-detail?type=3')" style="height: 80rpx;margin-top: 44rpx;border-radius: 32rpx;border: 2rpx solid #3742C5;display: flex;justify-content: center;align-items: center;">
 					<view style="font-weight: bold;font-size: 28rpx;color: #3742C5;">查看明细</view>
 					<view style="margin-left: 15rpx;">
 						<image src="/static/tk-right.png" style="width: 26rpx;height: 26rpx;" mode=""></image>
@@ -94,8 +94,6 @@
 					<view style="font-weight: 500;font-size: 24rpx;color: #A9ABB6;margin-top: 10rpx;">他邀请了<span style="color: #EB8E26;">{{parent.xj_nums}}</span>人</view>
 				</view>
 			</view>
-			
-			
 		</view>
 		<nav-bar :nav-index="2"/>
 	</view>
