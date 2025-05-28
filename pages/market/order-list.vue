@@ -7,7 +7,7 @@
 					<image src="/static/order-sous.png" style="width: 30rpx;height: 30rpx;" mode=""></image>
 				</view>
 				<view style="margin-left: 10rpx;">
-					<input type="text" style="font-weight: 500;font-size: 26rpx;width: 100%;" placeholder="请输入搜索内容"
+					<input @confirm="searchData" v-model="search" type="text" style="font-weight: 500;font-size: 26rpx;width: 100%;" placeholder="请输入搜索内容"
 						placeholder-style="font-weight: 500;font-size: 26rpx;color: #D4D6DC;" />
 				</view>
 			</view>
@@ -178,6 +178,18 @@
 				this.load_status = 'loading';
 				this.getList(true)
 			},
+			searchData() {
+				this.list = []
+				this.last_id = ''
+				this.getList()
+			},
+			changeTab(e) {
+				this.activeTab = e
+				this.last_id = ''
+				this.list = []
+				this.load_status = 'loadmore'
+				this.getList()
+			},
 			detail(id, status) {
 				if (status == 1) {
 					uni.navigateTo({
@@ -196,13 +208,6 @@
 						url: '/pages/market/cancel-order?id=' + id
 					})
 				}
-			},
-			changeTab(e) {
-				this.activeTab = e
-				this.last_id = ''
-				this.load_status = 'loadmore'
-				this.list = []
-				this.getList()
 			},
 			padZero(num) {
 				return num < 10 ? `0${num}` : num;

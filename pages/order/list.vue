@@ -7,7 +7,7 @@
 					<image src="/static/order-sous.png" style="width: 30rpx;height: 30rpx;" mode=""></image>
 				</view>
 				<view style="margin-left: 15rpx;width: 100%;">
-					<input @keyup.enter="getList" v-model="search" type="text" style="width: 100%;"
+					<input @confirm="searchData" v-model="search" type="text" style="width: 100%;"
 						placeholder="请输入卡号/订单号" placeholder-style="font-weight: 500;font-size: 26rpx;color: #757B8C;" />
 				</view>
 			</view>
@@ -197,8 +197,12 @@
 				})
 			},
 			loadMoreData() {
-				this.load_status = 'loading';
 				this.getList(true)
+			},
+			searchData() {
+				this.list = []
+				this.last_id = ''
+				this.getList()
 			},
 			nameShow(value) {
 				switch (value) {
@@ -224,6 +228,8 @@
 				})
 			},
 			changeTab(e) {
+				this.list = []
+				this.last_id = ''
 				this.activeTab = e
 				this.getList()
 			},
@@ -246,9 +252,13 @@
 							}).then(res => {
 								uni.hideLoading()
 								if (res.code) {
+									this.list = []
+									this.last_id = ''
 									obj.getList()
 									uni.$u.toast(res.msg)
 								} else {
+									this.list = []
+									this.last_id = ''
 									obj.getList()
 									uni.$u.toast(res.msg)
 								}
