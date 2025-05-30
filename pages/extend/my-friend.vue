@@ -63,13 +63,38 @@
 					设置折扣：{{ userName }}
 				</view>
 				<view style="padding: 34rpx;">
+					<view>
+						<v-tabs v-model="setActiveTab" :lineScale="0.25" height="80rpx" activeColor="#3742C5"
+							lineColor="#3742C5" :scroll="false" :tabs="['话费', '电费', '话费快充']"
+							@change="changeSetTab"></v-tabs>
+					</view>
 					<view v-for="(item, index) in mealList" :key="index">
-						<view style="font-weight: 400;font-size: 24rpx;margin-top: 26rpx;margin-left: 10rpx;">
-							{{ item.name }}（{{ item.type }}）
+						<view v-if="setActiveTab == 0 && item.type == '话费'">
+							<view style="font-weight: 400;font-size: 24rpx;margin-top: 26rpx;margin-left: 10rpx;">
+								{{ item.name }}（{{ item.type }}）
+							</view>
+							<view style="padding: 15rpx;background: #F6F7F9;border-radius: 32rpx;">
+								<input v-model="item.discount" type="text" placeholder="请输入折扣"
+									placeholder-style="font-weight: 400;font-size: 30rpx;color: #B7BAC7;width: 100%" />
+							</view>
 						</view>
-						<view style="padding: 15rpx;background: #F6F7F9;border-radius: 32rpx;">
-							<input v-model="item.discount" type="text" placeholder="请输入折扣"
-								placeholder-style="font-weight: 400;font-size: 30rpx;color: #B7BAC7;width: 100%" />
+						<view v-if="setActiveTab == 1 && item.type == '电费'">
+							<view style="font-weight: 400;font-size: 24rpx;margin-top: 26rpx;margin-left: 10rpx;">
+								{{ item.name }}（{{ item.type }}）
+							</view>
+							<view style="padding: 15rpx;background: #F6F7F9;border-radius: 32rpx;">
+								<input v-model="item.discount" type="text" placeholder="请输入折扣"
+									placeholder-style="font-weight: 400;font-size: 30rpx;color: #B7BAC7;width: 100%" />
+							</view>
+						</view>
+						<view v-if="setActiveTab == 2 && item.type == '话费快充'">
+							<view style="font-weight: 400;font-size: 24rpx;margin-top: 26rpx;margin-left: 10rpx;">
+								{{ item.name }}（{{ item.type }}）
+							</view>
+							<view style="padding: 15rpx;background: #F6F7F9;border-radius: 32rpx;">
+								<input v-model="item.discount" type="text" placeholder="请输入折扣"
+									placeholder-style="font-weight: 400;font-size: 30rpx;color: #B7BAC7;width: 100%" />
+							</view>
 						</view>
 					</view>
 					<view style="display: flex;justify-content: center;margin-top: 40rpx;">
@@ -89,6 +114,7 @@
 		data() {
 			return {
 				activeTab: 0,
+				setActiveTab: 0,
 				list: [],
 				todayTotal: '',
 				total: '',
@@ -126,9 +152,12 @@
 				this.activeTab = e
 				this.getList()
 			},
+			changeSetTab(e) {
+				this.setActiveTab = e
+			},
 			discountSet(id, name) {
 				this.userId = id,
-				this.userName = name
+					this.userName = name
 
 				uni.showLoading({
 					title: '正在获取配置中',

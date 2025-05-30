@@ -46,9 +46,6 @@
 			<view @click="register" style="width: 100%;text-align: center;font-weight: 400;font-size: 32rpx;color: #939CAC;margin-top: 52rpx;">
 				注册
 			</view>
-			
-			
-			
 		</view>
 	</view>
 </template>

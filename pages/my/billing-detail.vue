@@ -64,9 +64,9 @@
 					<view v-for="(item, index) in list" :key="index"
 						style="margin-top: 20rpx;display: flex;margin-bottom: 40rpx;">
 						<view style="display: flex;width: 100%;">
-							<view>
+							<!-- <view>
 								<image src="/static/order-huaf.png" style="width: 90rpx;height: 90rpx;" mode=""></image>
-							</view>
+							</view> -->
 							<view style="margin-left: 18rpx;width: 100%;">
 								<view style="display: flex;justify-content: space-between;">
 									<view style="font-weight: bold;font-size: 25rpx;">{{item.desc}}</view>

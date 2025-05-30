@@ -197,6 +197,7 @@
 				if (!this.pay_time) return uni.$u.toast('请输入付款时限')
 				if (!this.type) return uni.$u.toast('请输入交易类型')
 				if (this.checkboxValue2.length == 0) return uni.$u.toast('请至少选择一种支付方式')
+				if (parseFloat(this.max_price) > parseFloat(this.saleMoney)) return uni.$u.toast('最大交易额不得大于出售数量')
 				uni.showLoading({
 					title: '发布中',
 					mask: true

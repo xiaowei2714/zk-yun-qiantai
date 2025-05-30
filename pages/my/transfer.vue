@@ -39,7 +39,7 @@
 				</view>
 				<view style="margin-left: 24rpx;width: 100%;">
 					<view style="display: flex;justify-content: space-between;">
-						<view style="font-weight: bold;font-size: 30rpx;">USDT划转</view>
+						<view style="font-weight: bold;font-size: 30rpx;">向 {{ item.u_sn }} 划转</view>
 						<view style="font-weight: bold;font-size: 30rpx;color: #EB8E26;">-{{ item.money }}＄</view>
 					</view>
 					<view style="font-weight: 400;font-size: 24rpx;color: #A9ABB6;margin-top: 14rpx;">

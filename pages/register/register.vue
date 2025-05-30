@@ -53,7 +53,7 @@
 				<view style="font-weight: bold;font-size: 24rpx;">邀请码</view>
 				<view style="display: flex;justify-content: space-between;align-items: center;">
 					<view style="width: 100%;">
-						<input v-model="invite_code" type="safe-password" :password="true" placeholder="请输入邀请码"
+						<input v-model="invite_code" type="text" placeholder="请输入邀请码"
 							style="font-size: 30rpx;margin-top: 20rpx;width: 100%;"
 							placeholder-style="color: #C7CAD2;font-size: 30rpx;" />
 					</view>
@@ -104,7 +104,10 @@
 				invite_code: ''
 			};
 		},
-		onLoad() {
+		onLoad(options) {
+			if (options.invite !== '') {
+				this.invite_code = options.invite
+			}
 			this.getInfo()
 		},
 		methods: {

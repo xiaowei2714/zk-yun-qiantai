@@ -1,6 +1,6 @@
 <template>
 	<view style="padding: 30rpx;">
-		<view
+<!-- 		<view
 			style="background: #F6F7F9;border-radius: 32rpx;display: flex;padding: 6rpx;width: 290rpx;justify-content: space-between;">
 			<view @click="changeType(1)"
 				style="width: 144rpx;height: 68rpx;border-radius: 28rpx;font-weight: 400;font-size: 32rpx;text-align: center;line-height: 68rpx;"
@@ -10,7 +10,7 @@
 				style="width: 144rpx;height: 68rpx;border-radius: 28rpx;font-weight: 400;font-size: 32rpx;text-align: center;line-height: 68rpx;"
 				:style="{background: type == 2 ? '#FFFFFF' : '#F6F7F9',color: type == 2 ? '#000000' : '#A9ABB6',
 				boxShadow: type == 2 ? '0rpx 4rpx 30rpx 2rpx rgba(0,0,0,0.08)' : ''}">卖出</view>
-		</view>
+		</view> -->
 
 		<view style="margin-bottom: 200rpx;">
 			
@@ -44,6 +44,7 @@
 					<view>
 						<span style="font-weight: bold;font-size: 28rpx;">￥</span>
 						<span style="font-weight: bold;font-size: 44rpx;">{{item.price}}</span>
+						<span style="font-weight: bold;font-size: 28rpx;margin-left: 10rpx">RMB/Y币</span>
 					</view>
 					<view>
 						<view v-if="item.pay_type.includes('zfb')"

@@ -54,12 +54,12 @@
 					</view>
 					<view style="font-weight: 400;font-size: 24rpx;color: #A9ABB6;margin-left: 72rpx;margin-top: -15rpx;">账号充值/购买订单</view>
 				</view>
-				<view @click="toPages('/pages/my/withdrawal')" style="width: 290rpx;background: #ECF0F9;border-radius: 32rpx;padding: 24rpx;">
+				<view @click="toPages('/pages/my/purse')" style="width: 290rpx;background: #ECF0F9;border-radius: 32rpx;padding: 24rpx;">
 					<view style="display: flex;align-items: center;">
 						<view>
 							<image src="/static/my-chongzhitix.png" style="width: 56rpx;height: 56rpx;" mode=""></image>
 						</view>
-						<view style="font-weight: bold;font-size: 28rpx;margin-left: 15rpx;margin-top: -10rpx;">充值提现</view>
+						<view style="font-weight: bold;font-size: 28rpx;margin-left: 15rpx;margin-top: -10rpx;">我的钱包</view>
 					</view>
 					<view style="font-weight: 400;font-size: 24rpx;color: #A9ABB6;margin-left: 72rpx;margin-top: -15rpx;">账号提现</view>
 				</view>

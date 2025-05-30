@@ -13,7 +13,7 @@
 			<view
 				style="height: 80rpx;margin-top: 12rpx;background: #F6F7F9;border-radius: 24rpx;display: flex;align-items: center;width: 100%;">
 				<view style="width: 100%;margin-left: 34rpx;">
-					<input @input="priceChange" v-model="buy_price" type="number" placeholder="请输入"
+					<input @input="priceChange" v-model.number="buy_price" placeholder="请输入"
 						placeholder-style="font-weight: 400;font-size: 30rpx;color: #B7BAC7;width: 100%" />
 				</view>
 			</view>
@@ -93,11 +93,11 @@
 			},
 			confirmSubmit() {
 				if (this.can_click === false) {
-					return uni.$u.toast('正在充值中...')
+					return uni.$u.toast('正在购买中...')
 				}
 				this.can_click = false
 				uni.showLoading({
-					title: '充值中',
+					title: '购买中',
 					mask: true
 				})
 
@@ -121,7 +121,7 @@
 					this.can_click = true
 					uni.hideLoading()
 					if (res.code) {
-						uni.$u.toast('充值成功')
+						uni.$u.toast('购买成功')
 					} else {
 						uni.$u.toast(res.msg)
 					}

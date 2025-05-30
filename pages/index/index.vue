@@ -131,7 +131,13 @@
 				notice: []
 			}
 		},
-		onLoad() {
+		onLoad(options) {
+			if (options.invite !== '') {
+				uni.navigateTo({
+					url: '/pages/register/register?invite=' + options.invite
+				})
+			}
+			
 			this.getIndexConfig()
 		},
 		methods: {

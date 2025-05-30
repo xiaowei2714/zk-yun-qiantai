@@ -74,10 +74,7 @@
 		<view style="margin-top: 30rpx;background: #ECF0F9;border-radius: 32rpx;padding: 30rpx;">
 			<view style="font-weight: bold;font-size: 24rpx;">请在下单前仔细阅读广告方条款</view>
 			<view style="margin-top: 18rpx;font-weight: 500;font-size: 24rpx;color: #757B8C;">
-				您好！请您知晓并同意以下交易要求(不满足要求，请取消订单)
-				1、【实名付款】请使用与平台实名一致的账户付款，否则不会放行。
-				2、【资金安全】请使用微信零钱通、支付宝余额宝付款。黑钱勿扰，发现报警并通知客服处理这笔交易!
-				3、【重要提醒】近期诈骗频发，请勿在他人的引诱至平台下单完成后将币转到【资金盘】、【赌博网站】、【跨境电商】等骗局APP网站。买币后听从他人诱导将币转出，会有云失币和被诈骗的风险，Y币等值于美元，切记保管好自己的资产，注意各种投资理财等骗局。放币后不得转给任何人或者其他平台，被骗与本账号
+				{{ info.tips }}
 			</view>
 		</view>
 		<view style="margin-top: 40rpx;box-shadow: 0rpx 6rpx 32rpx 2rpx rgba(0,0,0,0.08);border-radius: 32rpx;padding: 30rpx;">
