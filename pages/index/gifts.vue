@@ -19,7 +19,16 @@
 			</view>
 		</view>
 
-		<view style="margin-top: 68rpx;font-weight: bold;font-size: 32rpx;">实付金额</view>
+		<view style="margin-top: 50rpx;display: flex;flex-wrap: wrap;justify-content: space-between;">
+			<view style="font-weight: bold;font-size: 32rpx;">实付金额</view>
+			<view @click="notice_show = true" style="display: flex;align-items: center;">
+				<view style="font-weight: 400;font-size: 24rpx;color: #A9ABB6;">注意事项</view>
+				<view style="margin-left: 10rpx;">
+					<image src="/static/jy-yw.png" style="width: 24rpx;height: 24rpx;" mode=""></image>
+				</view>
+			</view>
+		</view>
+		
 		<view style="margin-top: 26rpx;height: 100rpx;background: #F6F7F9;border-radius: 24rpx;display: flex;justify-content: space-between;
 			align-items: center;padding-left: 30rpx;padding-right: 30rpx;">
 			<view>
@@ -48,6 +57,36 @@
 			text-align: center;line-height: 80rpx;">
 			确认充值
 		</view>
+		
+		<!-- 温馨提示 -->
+		<u-popup :show="notice_show" mode="center" :round="32" :closeable="true" @close="notice_show = false">
+			<view style="width: 560rpx;background: white;border-radius: 32rpx;">
+				<view
+					style="height: 78rpx;background: #E3E8FF;border-radius: 32rpx 32rpx 0rpx 0rpx;font-weight: bold;font-size: 30rpx;line-height: 78rpx;text-align: center;">
+					温馨提示
+				</view>
+				<view style="padding: 34rpx;">
+					<view style="color: #757B8C;font-size: 28rpx;width: 100%;margin-top: 38rpx;">
+						<view v-for="(item, index) in noticeList" :key="index">
+							<view style="color: #000000;">{{ item.title }}</view>
+							<view style="padding: 2rpx;">{{ item.content }}</view><br />
+						</view>
+						<view>
+							<u-checkbox-group @change="checkboxGroupChange" placement="column"
+								style="display: grid;place-items: center;">
+								<u-checkbox v-if="notice_today" checked key="1" label="今天不再显示"
+									name="1"></u-checkbox>
+								<u-checkbox v-else key="1" label="今天不再显示" name="1"></u-checkbox>
+							</u-checkbox-group>
+						</view>
+					</view>
+					<view style="margin-top: 30rpx;">
+						<view @click="noticeSubmit" style="width: 100%;height: 80rpx;background: #3742C5;border-radius: 18rpx;font-weight: bold;font-size: 28rpx;color: #FFFFFF;text-align: center;
+							line-height: 80rpx;">确定</view>
+					</view>
+				</view>
+			</view>
+		</u-popup>
 	</view>
 </template>
 
@@ -61,11 +100,15 @@
 				buy_price: 100,
 				pay_price: 100,
 				discount_price: 0,
-				can_click: true
+				can_click: true,
+				notice_show: false,
+				notice_today: false,
+				noticeList: [],
 			};
 		},
 		onLoad() {
 			this.getConfig()
+			this.getNotice()
 		},
 		methods: {
 			getConfig() {
@@ -81,6 +124,33 @@
 						this.priceChange()
 					}
 				})
+			},
+			getNotice() {
+				this.$request('get', 'api/notice/noticeList', {
+					type: 5
+				}).then(res => {
+					if (res.code) {
+						this.noticeList = res.data.data
+						this.notice_today = !res.data.show
+						this.notice_show = res.data.show && res.data.data.length != 0
+					}
+				})
+			},
+			noticeSubmit() {
+				uni.showLoading({
+					title: '加载中',
+					mask: true
+				})
+				this.$request('post', 'api/notice/todayShow', {
+					type: 5,
+					show: this.notice_today ? 1 : 2
+				}).then(res => {
+					uni.hideLoading()
+					this.notice_show = false
+				})
+			},
+			checkboxGroupChange(e) {
+				this.notice_today = e.includes('1')
 			},
 			priceChange() {
 				let tmp = 1

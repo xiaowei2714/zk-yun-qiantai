@@ -308,7 +308,7 @@
 			},
 			getNotice() {
 				this.$request('get', 'api/notice/noticeList', {
-					type: 2
+					type: 4
 				}).then(res => {
 					if (res.code) {
 						this.noticeList = res.data.data
@@ -317,21 +317,21 @@
 					}
 				})
 			},
-			checkboxGroupChange(e) {
-				this.notice_today = e.includes('1')
-			},
 			noticeSubmit() {
 				uni.showLoading({
 					title: '加载中',
 					mask: true
 				})
 				this.$request('post', 'api/notice/todayShow', {
-					type: 2,
+					type: 4,
 					show: this.notice_today ? 1 : 2
 				}).then(res => {
 					uni.hideLoading()
 					this.notice_show = false
 				})
+			},
+			checkboxGroupChange(e) {
+				this.notice_today = e.includes('1')
 			}
 		}
 	}
