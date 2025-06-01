@@ -99,7 +99,7 @@
 								<view v-if="item.status == 1" @click="cancelOrder(item.id)" class="cancel_order">
 									取消订单
 								</view>
-								<view v-if="not_card && item.status == 3" @click="genBalance(item.id)"
+								<view v-if="not_card && item.status != 4" @click="genBalance(item.id)"
 									class="gen_balance">更新余额
 								</view>
 								<view @click="detail(item.id)" class="go_detail">查看详情</view>
