@@ -119,14 +119,18 @@
 				</view>
 			</view>
 			<view v-else style="margin-top: 60rpx;display: flex;align-items: center;">
-				<view @click="complete" style="width: 100%;height: 80rpx;background: #3742C5;border-radius: 32rpx;font-weight: bold;font-size: 26rpx;text-align: center;line-height: 80rpx;
+				<view @click="sellerCancelShow = true"
+					style="width: 332rpx;height: 80rpx;background: #EAECEF;border-radius: 32rpx;font-weight: bold;font-size: 26rpx;text-align: center;line-height: 80rpx;">
+					取消订单
+				</view>
+				<view @click="complete" style="width: 332rpx;height: 80rpx;background: #3742C5;border-radius: 32rpx;font-weight: bold;font-size: 26rpx;text-align: center;line-height: 80rpx;
 					color: white;margin-left: 26rpx;">
 					确认收款
 				</view>
 			</view>
 		</view>
 
-		<!-- 取消提醒 -->
+		<!-- 买方取消提醒 -->
 		<u-popup :show="cancelShow" mode="center" :round="32" :closeable="true" @close="cancelShow = false">
 			<view
 				style="width: 560rpx;padding: 40rpx;background: linear-gradient( 180deg, #E3E8FF 0%, #FFFFFF 100%);border-radius: 32rpx;">
@@ -151,6 +155,33 @@
 				</view>
 			</view>
 		</u-popup>
+	
+		<!-- 卖方取消提醒 -->
+		<u-popup :show="sellerCancelShow" mode="center" :round="32" :closeable="true" @close="sellerCancelShow = false">
+			<view
+				style="width: 560rpx;padding: 40rpx;background: linear-gradient( 180deg, #E3E8FF 0%, #FFFFFF 100%);border-radius: 32rpx;">
+				<view style="display: flex;justify-content: center;margin-top: 32rpx;">
+					<view>
+						<image src="/static/jy-qx-gt.png" style="width: 140rpx;height: 140rpx;" mode=""></image>
+					</view>
+				</view>
+				<view style="margin-top: 36rpx;font-weight: 400;font-size: 26rpx;line-height: 40rpx;">
+					1.如果买家已经付款，请勿取消订单<br />
+					2.如因系统超时订单取消，买家将被记责(完成率受影响)。<br />
+					3.如果卖家在 15 分钟内没有回复聊天，则买家无责。您的成单事将不受影响。一天只能5次无责取消。<br />
+					4.一天内您最多只能3次有责取消。否则，您的帐户将被暂停，并且您不能在同一天再下订单。
+				</view>
+				<view @click="sellerCancelOrder" style="margin-top: 52rpx;height: 80rpx;line-height: 80rpx;text-align: center;font-weight: bold;font-size: 28rpx;
+					color: #FFFFFF;background: #3742C5;border-radius: 32rpx;">
+					取消订单
+				</view>
+				<view @click="sellerCancelShow = false" style="margin-top: 25rpx;height: 80rpx;line-height: 80rpx;text-align: center;font-weight: bold;font-size: 28rpx;
+					background: #EBECF0;border-radius: 32rpx;margin-bottom: 33rpx;">
+					暂时不要
+				</view>
+			</view>
+		</u-popup>
+	
 	</view>
 </template>
 
@@ -159,6 +190,7 @@
 		data() {
 			return {
 				cancelShow: false,
+				sellerCancelShow: false,
 				order_id: '',
 				info: {},
 				upShow: true,
@@ -189,6 +221,24 @@
 					mask: true
 				})
 				this.$request('get', 'api/ad/cancelOrder', {
+					id: this.order_id
+				}).then(res => {
+					uni.hideLoading()
+					if (res.code) {
+						uni.navigateTo({
+							url: '/pages/market/cancel-order?id=' + this.order_id
+						})
+					} else {
+						uni.$u.toast(res.msg)
+					}
+				})
+			},
+			sellerCancelOrder() {
+				uni.showLoading({
+					title: '取消中',
+					mask: true
+				})
+				this.$request('get', 'api/ad/sellerCancelOrder', {
 					id: this.order_id
 				}).then(res => {
 					uni.hideLoading()

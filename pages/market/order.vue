@@ -26,7 +26,7 @@
 						<image src="/static/info-right.png" style="width: 10rpx;height: 17rpx;" mode=""></image>
 					</view>
 				</view>
-				<view style="margin-top: 28rpx;font-weight: 400;font-size: 24rpx;color: #A9ABB6;">买方的加率货币由币安托管</view>
+				<!-- <view style="margin-top: 28rpx;font-weight: 400;font-size: 24rpx;color: #A9ABB6;">买方的加率货币由币安托管</view> -->
 			</view>
 			<!-- <view style="position: relative;">
 				<image src="/static/jy-order-xs.png" style="width: 80rpx;height: 80rpx;" mode=""></image>
@@ -286,14 +286,6 @@
 			clearInterval(this.timer);
 		},
 		methods: {
-			onCountdownEnd() {
-				// uni.showToast({
-				// 	title: '支付时间已结束',
-				// 	icon: 'none'
-				// });
-				// this.getDetail()
-				// 其他倒计时结束后的逻辑
-			},
 			padZero(num) {
 				return num < 10 ? `0${num}` : num;
 			},
@@ -306,7 +298,8 @@
 				if (diff <= 0) {
 					this.countdown = '00:00';
 					clearInterval(this.timer);
-					this.onCountdownEnd();
+					this.timerCancelOrder();
+					
 					return;
 				}
 
@@ -360,6 +353,24 @@
 					mask: true
 				})
 				this.$request('get', 'api/ad/cancelOrder', {
+					id: this.order_id
+				}).then(res => {
+					uni.hideLoading()
+					if (res.code) {
+						uni.navigateTo({
+							url: '/pages/market/cancel-order?id=' + this.order_id
+						})
+					} else {
+						uni.$u.toast(res.msg)
+					}
+				})
+			},
+			timerCancelOrder() {
+				uni.showLoading({
+					title: '取消中',
+					mask: true
+				})
+				this.$request('get', 'api/ad/timeCancelOrder', {
 					id: this.order_id
 				}).then(res => {
 					uni.hideLoading()

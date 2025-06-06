@@ -132,7 +132,7 @@
 			}
 		},
 		onLoad(options) {
-			if (options.invite !== '') {
+			if (options.invite !== '' && options.invite !== undefined && options.invite !== 'undefined') {
 				uni.navigateTo({
 					url: '/pages/register/register?invite=' + options.invite
 				})

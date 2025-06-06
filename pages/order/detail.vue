@@ -25,7 +25,7 @@
 						客服服务团队已收到您的订单，我们会尽快安排订单处理
 					</view>
 					<view style="display: flex;justify-content: space-between;margin-top: 44rpx;">
-						<view style="width: 292rpx;height: 80rpx;background: #FFFFFF;border-radius: 18rpx 18rpx 18rpx 18rpx;border: 2rpx solid #3742C5;
+						<view @click="toPages('/pages/my/kf')" style="width: 292rpx;height: 80rpx;background: #FFFFFF;border-radius: 18rpx 18rpx 18rpx 18rpx;border: 2rpx solid #3742C5;
 							font-weight: bold;font-size: 28rpx;color: #3742C5;text-align: center;line-height: 80rpx;">反馈问题</view>
 						<view style="width: 292rpx;height: 80rpx;background: #3742C5;border-radius: 18rpx 18rpx 18rpx 18rpx;border: 2rpx solid #3742C5;
 							font-weight: bold;font-size: 28rpx;color: white;text-align: center;line-height: 80rpx;">余额明细</view>
@@ -59,8 +59,9 @@
 			</view>
 			<view class="df">
 				<view class="dft">优惠信息</view>
-				<view class="dfc">折扣{{ infoObj.meal_discount }}折
-					优惠{{ infoObj.distance_price }}元</view>
+				<!-- <view class="dfc">折扣{{ infoObj.meal_discount }}折
+					优惠{{ infoObj.distance_price }}元</view> -->
+				<view class="dfc">折扣 {{ infoObj.meal_discount }} 折</view>
 			</view>
 			<view class="df">
 				<view class="dft">参考汇率</view>
@@ -99,6 +100,11 @@
 					}
 				})
 			},
+			toPages(url) {
+				uni.navigateTo({
+					url: url
+				})
+			}
 		}
 	}
 </script>

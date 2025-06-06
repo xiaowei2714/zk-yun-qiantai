@@ -13,8 +13,17 @@
 			</view>
 			<view style="height: 10rpx;width: 1rpx;"></view>
 			<view>
-				<v-tabs v-model="activeTab" :lineScale="0.25" height="80rpx" activeColor="#3742C5" lineColor="#3742C5"
-					:scroll="false" :tabs="['全部', '充值中', '已完成', '已失败']" @change="changeTab"></v-tabs>
+				<!-- <view style="display: flex;white-space: normal;background: rgb(255, 255, 255);height: 44px;padding: 0px;">
+					<view>全部</view>
+					<view>充值中</view>
+					<view>已完成</view>
+					<view>已失败</view>
+				</view> -->
+				<view style="position:relative;z-index:0">
+					<v-tabs v-model="activeTab" :lineScale="0.25" height="80rpx" activeColor="#3742C5"
+						lineColor="#3742C5" :scroll="false" :tabs="['全部', '充值中', '已完成', '部分完成', '已失败']"
+						@change="changeTab"></v-tabs>
+				</view>
 			</view>
 		</view>
 		<view style="padding: 30rpx;padding-bottom: 30rpx;">
@@ -24,6 +33,7 @@
 					<view v-else-if="item.status == 2" class="status_show status_recharging">充值中</view>
 					<view v-else-if="item.status == 3" class="status_show status_success">已完成</view>
 					<view v-else-if="item.status == 4" class="status_show status_fail">已失败</view>
+					<view v-else-if="item.status == 5" class="status_show status_part_success">部分</view>
 					<view style="padding-top: 24rpx;margin-left: 34rpx;">
 						<view style="display: flex;">
 							<view style="font-weight: bold;font-size: 28rpx;">订单：{{ item.sn }}</view>
@@ -346,6 +356,10 @@
 		background: #7EC050;
 	}
 
+	.status_part_success {
+		background: #11C050;
+	}
+
 	.status_fail {
 		background: #E47470;
 	}
@@ -427,5 +441,9 @@
 		text-align: center;
 		line-height: 64rpx;
 		margin-left: 14rpx;
+	}
+
+	.v-tabs__container {
+		background: red !important;
 	}
 </style>
