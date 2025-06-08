@@ -80,7 +80,7 @@
 						</view>
 					</view>
 					<view style="text-align: center;margin-top: 10rpx;font-weight: bold;font-size: 30rpx;">话费查询</view>
-					<view style="text-align: center;margin-top: 8rpx;font-weight: 400;font-size: 24rpx;color: #A9ABB6;">1小时成交量：100533</view>
+					<view style="text-align: center;margin-top: 8rpx;font-weight: 400;font-size: 24rpx;color: #A9ABB6;"></view>
 					<view style="margin-top: 20rpx;display: flex;justify-content: center;">
 						<view style="width: 222rpx;height: 58rpx;background: #EB8E26;border-radius: 34rpx;color: white;font-weight: bold;font-size: 28rpx;
 							text-align: center;line-height: 58rpx;">
@@ -101,7 +101,7 @@
 						</view>
 					</view>
 					<view style="text-align: center;margin-top: 10rpx;font-weight: bold;font-size: 30rpx;">礼品卡</view>
-					<view style="text-align: center;margin-top: 8rpx;font-weight: 400;font-size: 24rpx;color: #A9ABB6;">1小时成交量：3230</view>
+					<view style="text-align: center;margin-top: 8rpx;font-weight: 400;font-size: 24rpx;color: #A9ABB6;"></view>
 					<view style="margin-top: 20rpx;display: flex;justify-content: center;">
 						<view style="width: 222rpx;height: 58rpx;background: #EB8E26;border-radius: 34rpx;color: white;font-weight: bold;font-size: 28rpx;
 							text-align: center;line-height: 58rpx;">
