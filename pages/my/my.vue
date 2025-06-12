@@ -81,7 +81,7 @@
 					<image src="/static/my-zhangdanmx.png" style="width: 46rpx;height: 46rpx;" mode=""></image>
 					<view style="margin-top: 28rpx;font-weight: 400;font-size: 24rpx;color: #9C9EA8;">账单明细</view>
 				</view>
-				<view style="width: 25%;text-align: center;margin-bottom: 48rpx;">
+				<view @click="toPages('/pages/my/api')" style="width: 25%;text-align: center;margin-bottom: 48rpx;">
 					<image src="/static/my-api.png" style="width: 46rpx;height: 46rpx;" mode=""></image>
 					<view style="margin-top: 28rpx;font-weight: 400;font-size: 24rpx;color: #9C9EA8;">API</view>
 				</view>
