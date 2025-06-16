@@ -10,11 +10,12 @@
 				</view>
 			</view>
 			<view
-				style="margin-top: 20rpx;color: #3742C5;font-size: 28rpx;width: 100%;text-align: center;text-decoration: underline;">
+				style="margin-top: 20rpx;color: #b2b2b2;font-size: 28rpx;width: 100%;text-align: center;">
 				{{kf_mobile}}
 			</view>
 			<view style="margin-top: 20rpx;color: #b2b2b2;font-size: 28rpx;width: 100%;text-align: center;">
-				服务时间：{{kf_time}}</view>
+				{{kf_time}}
+			</view>
 			<view style="display: flex;justify-content: center;margin-top: 50rpx;margin-bottom: 50rpx;">
 				<view @click="saveImage" style="width: 350rpx;height: 80rpx;border-radius: 100rpx;text-align: center;line-height: 80rpx;font-size: 30rpx;color: white;background-color: #3742C5;
 					">保存客服二维码</view>

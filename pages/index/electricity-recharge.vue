@@ -57,9 +57,9 @@
 					</view>
 				</view>
 			</view>
-			<view style="margin-top: 28rpx;display: flex;flex-wrap: wrap;justify-content: space-between;">
+			<view style="margin-top: 28rpx;display: flex;flex-wrap: wrap;justify-content: flex-start;margin-left: -23rpx;">
 				<view @click="choosePrice(item)" v-for="(item, index) in list" :key="index"
-					style="width: 212rpx;height: 82rpx;border-radius: 24rpx;font-weight: bold;font-size: 36rpx;text-align: center;line-height: 82rpx;margin-bottom: 24rpx;"
+					style="width: 212rpx;height: 82rpx;border-radius: 24rpx;font-weight: bold;font-size: 36rpx;text-align: center;line-height: 82rpx;margin-bottom: 24rpx;margin-left: 23rpx;"
 					:style="{border: activeMeal.id == item.id ? '2rpx solid #3742C5' : '2rpx solid #DEE0E6', color: activeMeal.id == item.id ? '#3742C5' : '#B7BAC7'}">
 					{{item.price}}
 				</view>
@@ -80,13 +80,8 @@
 			</view>
 			<view style="margin-top: 40rpx;display: flex;justify-content: space-between;">
 				<view style="font-weight: 400;font-size: 28rpx;color: #757B8C;">优惠信息</view>
-				<view v-if="type == 1" style="font-weight: bold;font-size: 28rpx;color: #000000;">
+				<view style="font-weight: bold;font-size: 28rpx;color: #000000;">
 					{{activeMeal.discount}}折
-					优惠{{activeMeal.price2}}Y币
-				</view>
-				<view v-if="type == 2" style="font-weight: bold;font-size: 28rpx;color: #000000;">
-					{{activeMeal.discount}}折
-					优惠{{(activeMeal.price2 * numbers.length).toFixed(3)}}Y币
 				</view>
 			</view>
 			<view style="margin-top: 36rpx;display: flex;justify-content: space-between;">

@@ -32,6 +32,15 @@
 			}
 		},
 		{
+			"path" : "pages/my/api",
+			"style" : 
+			{
+				"navigationBarTitleText" : "API",
+				"navigationBarBackgroundColor": "#ffffff",
+				"backgroundColor": "#F8F8F8"
+			}
+		},
+		{
 			"path" : "pages/order/list",
 			"style" : 
 			{

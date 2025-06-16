@@ -28,7 +28,7 @@
 				</view>
 			</view>
 		</view>
-		
+
 		<view style="margin-top: 26rpx;height: 100rpx;background: #F6F7F9;border-radius: 24rpx;display: flex;justify-content: space-between;
 			align-items: center;padding-left: 30rpx;padding-right: 30rpx;">
 			<view>
@@ -41,7 +41,8 @@
 		</view>
 		<view v-if="discount !== ''" style="margin-top: 40rpx;display: flex;justify-content: space-between;">
 			<view style="font-weight: 400;font-size: 28rpx;color: #757B8C;">优惠信息</view>
-			<view style="font-weight: bold;font-size: 28rpx;color: #000000;">{{ discount }}折 优惠{{ discount_price }}Y币
+			<view style="font-weight: bold;font-size: 28rpx;color: #000000;">
+				{{ discount }}折
 			</view>
 		</view>
 		<view style="margin-top: 36rpx;display: flex;justify-content: space-between;">
@@ -57,7 +58,7 @@
 			text-align: center;line-height: 80rpx;">
 			确认充值
 		</view>
-		
+
 		<!-- 温馨提示 -->
 		<u-popup :show="notice_show" mode="center" :round="32" :closeable="true" @close="notice_show = false">
 			<view style="width: 560rpx;background: white;border-radius: 32rpx;">
@@ -74,8 +75,7 @@
 						<view>
 							<u-checkbox-group @change="checkboxGroupChange" placement="column"
 								style="display: grid;place-items: center;">
-								<u-checkbox v-if="notice_today" checked key="1" label="今天不再显示"
-									name="1"></u-checkbox>
+								<u-checkbox v-if="notice_today" checked key="1" label="今天不再显示" name="1"></u-checkbox>
 								<u-checkbox v-else key="1" label="今天不再显示" name="1"></u-checkbox>
 							</u-checkbox-group>
 						</view>

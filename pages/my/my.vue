@@ -32,11 +32,11 @@
 			</view>
 			<view style="margin-top: 65rpx;display: flex;justify-content: space-around;">
 				<view @click="toPages('/pages/my/purse')" style="text-align: center;">
-					<view style="font-weight: bold;font-size: 30rpx;">Y币 {{userInfo.user_money ? userInfo.user_money : '0.00'}}</view>
+					<view style="font-weight: bold;font-size: 30rpx;">{{userInfo.user_money ? userInfo.user_money : '0.00'}}</view>
 					<view style="font-weight: 400;font-size: 26rpx;color: #A9ABB6;margin-top: 10rpx;">可用资产</view>
 				</view>
 				<view style="text-align: center;">
-					<view style="font-weight: bold;font-size: 30rpx;">Y币 {{userInfo.freeze_money ? userInfo.freeze_money : '0.00'}}</view>
+					<view style="font-weight: bold;font-size: 30rpx;">{{userInfo.freeze_money ? userInfo.freeze_money : '0.00'}}</view>
 					<view style="font-weight: 400;font-size: 26rpx;color: #A9ABB6;margin-top: 10rpx;">冻结资产</view>
 				</view>
 				<view @click="toPages('/pages/my/payment-type')" style="text-align: center;">
